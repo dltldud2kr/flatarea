@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>관리자 화면</title>
+    <style>
+        .detail table{
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .detail table th, .detail table td {
+            border:solid 1px #000;
+        }
+
+    </style>
+</head>
+<body>
+      <h1>관리자 회원관리 - 회원 상세 정보 </h1>
+
+    <div>
+        <a href="/admin/main.do"> 관리자 메인</a>
+        |
+        <a href="/admin/member/list.do"> 회원 목록 </a>
+        |
+        <a href="#"> 카테고리 관리 </a>
+        |
+        <a href="#"> 제품 관리 </a>
+        |
+        <a href="/member/logout"> 로그아웃 </a>
+        <br/>
+        <hr/>
+    </div>
+
+    <div class="detail">
+
+        <table>
+            <tbody>
+                <tr>
+                    <th>아이디</th>
+                    <td>
+                        <p th:text="${member.userId}"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>이름</th>
+                    <td>
+                        <p th:text="${member.userName}"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>연락처</th>
+                    <td>
+                        <p th:text="${member.phone}"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>가입일</th>
+                    <td>
+                        <p th:text="${member.regDt}"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>관리자 권한</th>
+                    <td>
+                        <p th:text="${member.adminYn}"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>계정 상태</th>
+                    <td>
+                        <p>
+                            현재상태: <span th:text="${member.userStatus}"></span>
+                        </p>
+                        <div>
+                            <form method="post" action="/admin/member/status.do">
+                                <input th:value="${member.userId}" type="hidden" name="userId" />
+                                <select name="userStatus">
+                                    <option value="AVAILABLE">이용가능상태</option>
+                                    <option value="STOP">정지상태</option>
+                                </select>
+                                <button type="submit">상태 변경</button>
+                            </form>
+                        </div>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <a href="list.do">목록</a>
+    </div>
+
+</body>
+</html>
