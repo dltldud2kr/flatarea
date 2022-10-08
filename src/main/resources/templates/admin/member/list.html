@@ -34,21 +34,8 @@
     </style>
 </head>
 <body>
-      <h1>관리자 회원관리 </h1>
-
-    <div>
-        <a href="/admin/main.do"> 관리자 메인</a>
-        |
-        <a href="/admin/member/list.do"> 회원 목록 </a>
-        |
-        <a href="#"> 카테고리 관리 </a>
-        |
-        <a href="#"> 제품 관리 </a>
-        |
-        <a href="/member/logout"> 로그아웃 </a>
-        <br/>
-        <hr/>
-    </div>
+      <h1>회원 관리 </h1>
+      <div th:replace="/fragments/layout.html :: fragment-admin-body-menu"></div>
 
     <div class="list">
 
@@ -101,9 +88,7 @@
         </table>
 
         <div class="pager" th:utext="${pager}">
-
         </div>
-
     </div>
 
 </body>

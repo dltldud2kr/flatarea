@@ -2,7 +2,7 @@ package com.example.flatarea.admin.controller;
 
 import com.example.flatarea.admin.dto.MemberDto;
 import com.example.flatarea.admin.model.MemberParam;
-import com.example.flatarea.admin.model.MemberStatusInput;
+import com.example.flatarea.admin.model.MemberInput;
 import com.example.flatarea.member.service.MemberService;
 import com.example.flatarea.util.PageUtil;
 import lombok.RequiredArgsConstructor;
@@ -56,9 +56,16 @@ public class AdminMemberController {
      */
 
     @PostMapping("/admin/member/status.do")
-    public String status(Model model, MemberStatusInput parameter){
+    public String status(Model model, MemberInput parameter){
 
         boolean result = memberService.ModifyStatus(parameter.getUserId(), parameter.getUserStatus());
+        return "redirect:/admin/member/detail.do?userId=" + parameter.getUserId();
+    }
+
+    @PostMapping("/admin/member/password.do")
+    public String passwordReset(Model model, MemberInput parameter){
+
+        boolean result = memberService.updatePassword(parameter.getUserId(), parameter.getPassword());
         return "redirect:/admin/member/detail.do?userId=" + parameter.getUserId();
     }
 

@@ -15,21 +15,8 @@
     </style>
 </head>
 <body>
-      <h1>관리자 회원관리 - 회원 상세 정보 </h1>
-
-    <div>
-        <a href="/admin/main.do"> 관리자 메인</a>
-        |
-        <a href="/admin/member/list.do"> 회원 목록 </a>
-        |
-        <a href="#"> 카테고리 관리 </a>
-        |
-        <a href="#"> 제품 관리 </a>
-        |
-        <a href="/member/logout"> 로그아웃 </a>
-        <br/>
-        <hr/>
-    </div>
+      <h1>회원 상세 정보 </h1>
+      <div th:replace="/fragments/layout.html :: fragment-admin-body-menu"></div>
 
     <div class="detail">
 
@@ -81,7 +68,19 @@
                                 <button type="submit">상태 변경</button>
                             </form>
                         </div>
+                    </td>
+                </tr>
 
+                <tr>
+                    <th>비밀번호 초기화</th>
+                    <td>
+                        <div>
+                            <form method="post" action="/admin/member/password.do">
+                                <input th:value="${member.userId}" type="hidden" name="userId" />
+                                <input type="text" name="password" />
+                                <button type="submit">비밀번호 초기화</button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
             </tbody>
