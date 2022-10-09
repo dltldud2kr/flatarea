@@ -2,14 +2,20 @@ package com.example.flatarea.product.model;
 
 import lombok.Data;
 
-import javax.persistence.Lob;
 import java.time.LocalDateTime;
 
 @Data
 public class ProductInput {
 
-String pName;
-LocalDateTime regDt;
+    long id;
+    String pName;
+    long categoryId;
+    String pInfo;
+    long price;
+    long salePrice;
+    int stockAmount;
+    int sellAmount;
+    String saleEndDtText;    //String형
 
 
 }

@@ -45,23 +45,80 @@
 <div class="detail">
 
     <form method="post">
+
     <table>
         <tbody>
             <tr>
-                <th>제품명</th>
+                <th>제품 카테고리</th>
                 <td>
-                    <input type="text" name="pName" required placeholder="강좌명 입력"/>
+                    <select name="categoryId" required>
+                    <option value="">카테고리선택</option>
+                    <option
+                            th:selected="${detail.categoryId == x.id}"
+                            th:each="x : ${category}" th:value="${x.id}" th:text="${x.categoryName}"></option>
+                    </select>
                 </td>
             </tr>
+
+            <tr>
+                <th>제품명</th>
+                <td>
+                    <input th:value="${detail.PName}" type="text" name="pName" required placeholder="제품명 입력"/>
+                </td>
+            </tr>
+
+            <tr>
+                <th>상품설명</th>
+                <td>
+                    <textarea th:value="${detail.pInfo}" name="pInfo" required placeholder="상품설명 입력"></textarea>
+                </td>
+            </tr>
+
+            <tr>
+                <th>정가</th>
+                <td>
+                    <input th:value="${detail.price}" type="text" name="price" required placeholder="상품가격 입력"/>
+                </td>
+            </tr>
+
+            <tr>
+                <th>판매가</th>
+                <td>
+                    <input th:value="${detail.salePrice}" type="text" name="salePrice" required placeholder="상품가격 입력"/>
+                </td>
+            </tr>
+
+            <tr>
+                <th>재고수량</th>
+                <td>
+                    <input th:value="${detail.stockAmount}" type="text" name="stockAmount" required placeholder="재고수량 입력"/>
+                </td>
+            </tr>
+
+            <tr>
+                <th>판매수량</th>
+                <td>
+                    <input th:value="${detail.sellAmount}" type="text" name="sellAmount" required placeholder="판매수량 입력"/>
+                </td>
+            </tr>
+
+            <tr>
+                <th>할인 종료일</th>
+                <td>
+                    <input th:value="${detail.saleEndDtText}" type="text" name="saleEndDtText" required placeholder="판매수량 입력"/>
+                </td>
+            </tr>
+
         </tbody>
     </table>
 
     <div class="buttons">
-        <button type="submit">제품 등록하기</button>
+        <button th:if="${editMode}" type="submit">제품 수정 하기</button>
+        <button th:if="${!editMode}" type="submit">제품 등록 하기</button>
         <a href="/admin/product/list.do"> 목록 이동 </a>
     </div>
-    </form>
 
+    </form>
 </div>
 
 </body>

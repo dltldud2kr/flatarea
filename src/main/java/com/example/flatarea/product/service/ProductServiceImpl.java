@@ -13,6 +13,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -25,11 +26,42 @@ public class ProductServiceImpl implements ProductService {
     public boolean add(ProductInput parameter) {
 
         Product product = Product.builder()
+                .categoryId(parameter.getCategoryId())
                 .pName(parameter.getPName())
+                .pInfo(parameter.getPInfo())
+                .price(parameter.getPrice())
+                .salePrice(parameter.getSalePrice())
+                .stockAmount(parameter.getStockAmount())
+                .sellAmount(parameter.getSellAmount())
+                //종료일 문자열
                 .regDt(LocalDateTime.now())
                 .build();
 
         productRepository.save(product);
+        return true;
+    }
+
+    @Override
+    public boolean set(ProductInput parameter) {
+
+        Optional<Product> optionalProduct = productRepository.findById(parameter.getId());
+        if (!optionalProduct.isPresent()){
+            //수정할 데이터가 없다.
+            return false;
+        }
+
+        Product product = optionalProduct.get();
+        product.setCategoryId(parameter.getCategoryId());
+        product.setPName(parameter.getPName());
+        product.setPInfo(parameter.getPInfo());
+        product.setPrice(parameter.getPrice());
+        product.setSalePrice(parameter.getSalePrice());
+        product.setStockAmount(parameter.getStockAmount());
+        product.setSellAmount(parameter.getSellAmount());
+        //종료문자열
+        product.setUdtDt(LocalDateTime.now());
+        productRepository.save(product);
+
         return true;
     }
 
@@ -49,6 +81,14 @@ public class ProductServiceImpl implements ProductService {
         }
 
         return list;
+
+    }
+
+    @Override
+    public ProductDto getById(long id) {
+
+        return productRepository.findById(id).map(ProductDto::of).orElse(null);
+        //memberServiceImpl의 detail()메소드와 동일
 
     }
 }

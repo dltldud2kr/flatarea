@@ -28,6 +28,7 @@ public class Product {
     LocalDateTime regDt; //상품 등록일
     LocalDateTime udtDt; //상품 수정일
 
+    long categoryId;
 
     String imagePath;
     long salePrice;     //현재 판매가

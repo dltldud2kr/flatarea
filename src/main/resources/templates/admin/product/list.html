@@ -55,11 +55,14 @@
             <tr th:each="x : ${list}">
                 <td th:text="${x.seq}">1</td>
                 <td>
-                    <p th:text="${x.pName}"></p>
+                    <p>
+                        <a th:href="'/admin/product/edit.do?id=' + ${x.id}" th:text="${x.pName}">제품명</a>
+                    </p>
                 </td>
                 <td th:text="${x.regDt}"></td>
 
             </tr>
+
         </tbody>
         </table>
 
