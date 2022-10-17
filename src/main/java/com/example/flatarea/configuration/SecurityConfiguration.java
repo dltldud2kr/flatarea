@@ -34,7 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable();
-        http.headers().frameOptions().sameOrigin();
+        http.headers().frameOptions().sameOrigin();     //네이버스마트에디터 추가를 위해 작성.
 
         http.authorizeRequests()
                 .antMatchers(

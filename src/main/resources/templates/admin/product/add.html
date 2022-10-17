@@ -16,12 +16,12 @@
             margin-top: 20px;
             text-align: center;
         }
-        .buttons a, buttons button {
+        .buttons a, .buttons button {
 
             border-width: 0;
             background-color: transparent;
             text-decoration: underline;
-            font-size: 12px;
+            font-size: 14px;
             line-height: 20px;
             height: 20px;
             color: #000000;
@@ -35,6 +35,12 @@
     <script>
         $(document).ready(function() {
 
+            $('#submitForm').on('submit', function () {
+                // 에디터의 내용이 textarea에 적용된다.
+                oEditors.getById["pInfo"].exec("UPDATE_CONTENTS_FIELD", []);
+
+            });
+
         });
     </script>
 </head>
@@ -44,7 +50,7 @@
 
 <div class="detail">
 
-    <form method="post">
+    <form id="submitForm" method="post">
 
     <table>
         <tbody>
@@ -70,21 +76,14 @@
             <tr>
                 <th>상품설명</th>
                 <td>
-                    <textarea th:value="${detail.pInfo}" name="pInfo" required placeholder="상품설명 입력"></textarea>
-                </td>
-            </tr>
-
-            <tr>
-                <th>정가</th>
-                <td>
-                    <input th:value="${detail.price}" type="text" name="price" required placeholder="상품가격 입력"/>
+                    <textarea th:text="${detail.PInfo}" id="pInfo" name="pInfo" placeholder="상품설명 입력"></textarea>
                 </td>
             </tr>
 
             <tr>
                 <th>판매가</th>
                 <td>
-                    <input th:value="${detail.salePrice}" type="text" name="salePrice" required placeholder="상품가격 입력"/>
+                    <input th:value="${detail.price}" type="text" name="price" required placeholder="상품가격 입력"/>
                 </td>
             </tr>
 
@@ -98,16 +97,10 @@
             <tr>
                 <th>판매수량</th>
                 <td>
-                    <input th:value="${detail.sellAmount}" type="text" name="sellAmount" required placeholder="판매수량 입력"/>
+                    <input th:value="${detail.sellAmount}" type="text" name="sellAmount" placeholder="추후에 작업"/>
                 </td>
             </tr>
 
-            <tr>
-                <th>할인 종료일</th>
-                <td>
-                    <input th:value="${detail.saleEndDtText}" type="text" name="saleEndDtText" required placeholder="판매수량 입력"/>
-                </td>
-            </tr>
 
         </tbody>
     </table>
@@ -121,5 +114,15 @@
     </form>
 </div>
 
+      <script type="text/javascript" src="/res/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+      <script type="text/javascript">
+          var oEditors = [];
+          nhn.husky.EZCreator.createInIFrame({
+              oAppRef: oEditors,
+              elPlaceHolder: "pInfo",
+              sSkinURI: "/res/se2/SmartEditor2Skin.html",
+              fCreator: "createSEditor2"
+          });
+      </script>
 </body>
 </html>

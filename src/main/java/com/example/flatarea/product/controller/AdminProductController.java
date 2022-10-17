@@ -129,4 +129,13 @@ public class AdminProductController {
         return "redirect:/admin/product/list.do";
     }
 
+    @PostMapping("/admin/product/delete.do")
+    public String del(Model model, HttpServletRequest request ,
+                            ProductInput parameter) {
+
+        boolean result = productService.del(parameter.getIdList());
+
+        return "redirect:/admin/product/list.do";
+    }
+
 }

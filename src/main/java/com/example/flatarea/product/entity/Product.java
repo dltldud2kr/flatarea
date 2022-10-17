@@ -31,8 +31,7 @@ public class Product {
     long categoryId;
 
     String imagePath;
-    long salePrice;     //현재 판매가
-    LocalDateTime saleEndDt;    //할인 종료일
+
 
 
 

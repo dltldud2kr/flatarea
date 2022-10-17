@@ -12,10 +12,13 @@ public class ProductInput {
     long categoryId;
     String pInfo;
     long price;
-    long salePrice;
+
     int stockAmount;
     int sellAmount;
-    String saleEndDtText;    //String형
+
+    //삭제를 위한
+    String idList;
+
 
 
 }

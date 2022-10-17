@@ -19,13 +19,11 @@ public class ProductDto {
     String pName;     //제품명
     String pInfo;    //상품설명
     long price;         //정가
-    long salePrice;     //판매가
     int stockAmount;    //재고 수량
     int sellAmount;     //판매 수량
     LocalDateTime regDt; //상품 등록일
     LocalDateTime udtDt; //상품 수정일
     String imagePath;
-    LocalDateTime saleEndDt;    //할인 종료일
 
     long categoryId;
 
@@ -46,8 +44,6 @@ public class ProductDto {
                 .stockAmount(product.getStockAmount())
                 .sellAmount(product.getSellAmount())
                 .price(product.getPrice())
-                .salePrice(product.getSalePrice())
-                .saleEndDt(product.getSaleEndDt())
                 .regDt(product.getRegDt())
                 .udtDt(product.getUdtDt())
                 .build();

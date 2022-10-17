@@ -30,10 +30,8 @@ public class ProductServiceImpl implements ProductService {
                 .pName(parameter.getPName())
                 .pInfo(parameter.getPInfo())
                 .price(parameter.getPrice())
-                .salePrice(parameter.getSalePrice())
                 .stockAmount(parameter.getStockAmount())
                 .sellAmount(parameter.getSellAmount())
-                //종료일 문자열
                 .regDt(LocalDateTime.now())
                 .build();
 
@@ -55,7 +53,6 @@ public class ProductServiceImpl implements ProductService {
         product.setPName(parameter.getPName());
         product.setPInfo(parameter.getPInfo());
         product.setPrice(parameter.getPrice());
-        product.setSalePrice(parameter.getSalePrice());
         product.setStockAmount(parameter.getStockAmount());
         product.setSellAmount(parameter.getSellAmount());
         //종료문자열
@@ -90,5 +87,26 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findById(id).map(ProductDto::of).orElse(null);
         //memberServiceImpl의 detail()메소드와 동일
 
+    }
+
+    @Override
+    public boolean del(String idList) {
+
+        if(idList != null && idList.length() > 0){
+            String[] ids = idList.split(",");
+            for(String x : ids) {
+                long id = 0L;
+                try {
+                    id = Long.parseLong(x);
+                } catch (Exception e){
+                }
+
+                if (id > 0){
+                    productRepository.deleteById(id);
+                }
+            }
+        }
+
+        return true;
     }
 }
