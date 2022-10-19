@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,6 +28,7 @@ public class ProductDto {
     String imagePath;
 
     long categoryId;
+    long brandId;
 
 
     //추가 컬럼
@@ -38,6 +41,7 @@ public class ProductDto {
         ProductDto productDto = ProductDto.builder()
                 .id(product.getId())
                 .categoryId(product.getCategoryId())
+                .brandId(product.getBrandId())
                 .imagePath(product.getImagePath())
                 .pName(product.getPName())
                 .pInfo(product.getPInfo())
@@ -49,5 +53,18 @@ public class ProductDto {
                 .build();
 
         return productDto;
+    }
+
+    public static List<ProductDto> of(List<Product> products) {
+
+        if(products == null) {
+            return null;
+        }
+
+        List<ProductDto> productList = new ArrayList<>();
+        for(Product x : products){
+            productList.add(ProductDto.of(x));
+        }
+        return productList;
     }
 }

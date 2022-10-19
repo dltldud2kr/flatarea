@@ -3,10 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        .title a{
+            text-decoration: none;
+            color: #000000;
+        }
+    </style>
 </head>
 <body>
-    <h1> 메인 페이지</h1>
+
     <div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
+
+    <div>
+        <a href="product">제품목록</a>
+        <hr/>
+
+    </div>
 
 </body>
 </html>

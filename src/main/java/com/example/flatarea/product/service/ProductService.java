@@ -33,4 +33,9 @@ public interface ProductService {
      * 강좌 내용 삭제
      */
     boolean del(String idList);
+
+    /**
+     * 프론트 제품 목록
+     */
+    List<ProductDto> frontList(ProductParam parameter);
 }

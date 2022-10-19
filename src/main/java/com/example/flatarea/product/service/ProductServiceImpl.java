@@ -1,6 +1,5 @@
 package com.example.flatarea.product.service;
 
-import com.example.flatarea.admin.dto.MemberDto;
 import com.example.flatarea.product.model.ProductInput;
 import com.example.flatarea.product.model.ProductParam;
 import com.example.flatarea.product.dto.ProductDto;
@@ -27,6 +26,7 @@ public class ProductServiceImpl implements ProductService {
 
         Product product = Product.builder()
                 .categoryId(parameter.getCategoryId())
+                .brandId(parameter.getBrandId())
                 .pName(parameter.getPName())
                 .pInfo(parameter.getPInfo())
                 .price(parameter.getPrice())
@@ -50,6 +50,7 @@ public class ProductServiceImpl implements ProductService {
 
         Product product = optionalProduct.get();
         product.setCategoryId(parameter.getCategoryId());
+        product.setBrandId(parameter.getBrandId());
         product.setPName(parameter.getPName());
         product.setPInfo(parameter.getPInfo());
         product.setPrice(parameter.getPrice());
@@ -108,5 +109,14 @@ public class ProductServiceImpl implements ProductService {
         }
 
         return true;
+    }
+
+    @Override
+    public List<ProductDto> frontList(ProductParam parameter) {
+
+        List<Product> productList = productRepository.findAll();
+
+        return ProductDto.of(productList);
+
     }
 }

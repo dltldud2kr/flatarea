@@ -29,8 +29,11 @@ public class Product {
     LocalDateTime udtDt; //상품 수정일
 
     long categoryId;
+    long brandId;   //브랜드명
 
     String imagePath;
+
+
 
 
 

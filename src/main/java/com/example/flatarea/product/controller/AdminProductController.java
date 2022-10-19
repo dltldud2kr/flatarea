@@ -1,5 +1,6 @@
 package com.example.flatarea.product.controller;
 
+import com.example.flatarea.admin.service.BrandService;
 import com.example.flatarea.admin.service.CategoryService;
 import com.example.flatarea.product.model.ProductInput;
 import com.example.flatarea.product.model.ProductParam;
@@ -23,6 +24,7 @@ public class AdminProductController {
 
     private final ProductService productService;
     private final CategoryService categoryService;
+    private final BrandService brandService;
 
     /**
      * 제품 목록
@@ -87,6 +89,7 @@ public class AdminProductController {
 
         //카테고리 정보를 내려줘야 함.
         model.addAttribute("category",categoryService.list());
+        model.addAttribute("brand",brandService.list());
 
 
         boolean editMode = request.getRequestURI().contains("/edit.do");

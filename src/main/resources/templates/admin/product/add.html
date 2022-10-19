@@ -67,6 +67,18 @@
             </tr>
 
             <tr>
+                <th>제품 브랜드</th>
+                <td>
+                    <select name="brandId" required>
+                        <option value="">브랜드선택</option>
+                        <option
+                                th:selected="${detail.brandId == x.id}"
+                                th:each="x : ${brand}" th:value="${x.id}" th:text="${x.brandName}"></option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
                 <th>제품명</th>
                 <td>
                     <input th:value="${detail.PName}" type="text" name="pName" required placeholder="제품명 입력"/>

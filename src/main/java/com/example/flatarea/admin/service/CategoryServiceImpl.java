@@ -11,8 +11,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import static org.springframework.data.domain.Sort.Direction.DESC;
-
 @RequiredArgsConstructor
 @Service
 public class CategoryServiceImpl implements CategoryService {

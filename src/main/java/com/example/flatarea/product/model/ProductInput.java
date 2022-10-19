@@ -10,6 +10,7 @@ public class ProductInput {
     long id;
     String pName;
     long categoryId;
+    long brandId;
     String pInfo;
     long price;
 
