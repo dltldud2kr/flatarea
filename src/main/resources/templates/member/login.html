@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 로그인</title>
+    <style>
+        .login{
+            text-align : center;
+        }
+    </style>
+</head>
+<body>
+
+
+        <div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
+
+        <div th:text="${errorMessage}">
+
+        </div>
+
+
+
+    <form method="post" class="login">
+        <h3>회원 로그인</h3>
+      <div>
+        <input type="text" name="username" placeholder="아이디(이메일)을 입력" required/></div>
+      <div>
+        <input type="password" name="password" placeholder="비밀번호 입력" required/>
+      </div>
+      <div>
+        <button type="submit"> 로그인 </button>
+      </div>
+
+        <div>
+            <a href="/member/register">회원가입</a>
+        </div>
+
+    </form>
+
+
+</body>
+</html>

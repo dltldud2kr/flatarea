@@ -1,5 +1,6 @@
-package com.example.flatarea;
+package com.example.flatarea.configuration;
 
+import com.example.flatarea.FlatareaApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 

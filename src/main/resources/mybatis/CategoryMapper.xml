@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.flatarea.admin.mapper.CategoryMapper">
+
+
+    <select id="select" resultType="com.example.flatarea.admin.dto.CategoryDto">
+        select c.*
+             , (select count(*) from product where category_id = c.id) as product_count
+        from category c
+        where using_yn = 1
+        order by  sort_value desc
+        ;
+    </select>
+</mapper>

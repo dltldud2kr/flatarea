@@ -1,1 +1,29 @@
+spring:
+  datasource:
+    #url: jdbc:mariadb://192.168.0.19:3306/webshop
+    url: jdbc:mariadb://localhost/webshop
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: webshop_user
+    password: qwer7726
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: dltldud2kr@gmail.com
+    password: cwjwtwnraptiihvt
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+
+mybatis:
+  mapper-locations: mybatis/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

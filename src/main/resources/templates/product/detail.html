@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>제품 상세 정보</title>
+    <style>
+
+        .info {
+            width: 1000px;
+            white-space:nowrap;         /* 공백문자 한줄처리 */
+            overflow:hidden;            /* 넓이 1000px를 넘는 내용은 보이지않게 처리 */
+            text-overflow:ellipsis;     /* ...생략부호 처리 */
+
+        }
+
+    </style>
+</head>
+<body>
+    <div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
+    <div th:replace="/fragments/layout.html :: fragement-category-menu"></div>
+    <h1>제품 상세 정보</h1>
+    <div>
+        <h2>제품명: <span th:text="${detail.PName}">제품</span></h2>
+        <div th:utext="${detail.PInfo}">제품 상세 설명</div>
+        <div>
+            <p>가격: <span th:text="${detail.price}"></span></p>
+        </div>
+        <div>
+            <button type="button">구매하기</button>
+            <button type="button">장바구니 담기</button>
+        </div>
+    </div>
+</body>
+</html>

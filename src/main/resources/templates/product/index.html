@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>제품 정보</title>
+    <style>
+
+        .info {
+            width: 1000px;
+            white-space:nowrap;         /* 공백문자 한줄처리 */
+            overflow:hidden;            /* 넓이 1000px를 넘는 내용은 보이지않게 처리 */
+            text-overflow:ellipsis;     /* ...생략부호 처리 */
+
+        }
+        /*
+        제목 클릭 시 링크이동 (a태그의 밑줄 및 색상 변경)
+         */
+        .title a{
+            text-decoration: none;
+            color: #000000;
+        }
+
+        select{
+            border:none;
+        }
+
+        /*
+        ul {
+            line-height: 1;
+        }
+        줄 간격을 줄이려는데 이렇게 줄이면 글자가 위아래로 잘려서 나옴.
+         */
+    </style>
+</head>
+<body>
+
+
+    <div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
+    <div th:replace="/fragments/layout.html :: fragement-category-menu"></div>
+
+
+    <ul>
+        <li th:each="x : ${list}">
+            <div>
+                <a th:href="'/product/' + ${x.id}">
+                <h4 th:text="${x.PName}">제품명</h4>
+                </a>
+                <div>
+                    <strong><p th:text="${x.price}">가격</p></strong>
+                    <p class="info" th:text="${x.summary}">제품 요약문구</p>
+                </div>
+            </div>
+        </li>
+    </ul>
+
+
+</body>
+</html>
