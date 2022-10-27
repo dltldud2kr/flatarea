@@ -3,30 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <title>회원가입</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            margin-left: 350px;
+        }
+
+        table th, table td {
+            height: 40px;
+        }
+        .td1{
+            width: 150px;
+        }
+        .td2{
+            width: 400px;
+        }
+        .h3{
+            margin-left: 330px ;
+            height: 40px;
+        }
+        input {
+            height: 20px;
+        }
+        button {
+            height: 40px;
+            width: 100px;
+            color:white;
+            background-color: #000000;
+            border-radius: 4px;
+            margin-top: 60px;
+        }
+    </style>
 </head>
 <body>
-    <h1>회원 가입</h1>
     <div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
 
     <form method="post">
-        <div>
-            <input type="email" name="userId" placeholder="아이디(이메일) 입력" required/>
-        </div>
-        <div>
-            <input type="text" name="userName" placeholder="이름 입력" required/>
-        </div>
-        <div>
-            <input type="password" name="password" placeholder="비밀번호 입력" required/>
-        </div>
-        <div>
-            <input type="password" name="rePassword" placeholder="비밀번호 확인" required/>
-        </div>
-        <div>
-            <input type="tel" name="phone" placeholder="전화번호 입력" required/>
-        </div>
 
-        <div>
-            <button>회원 가입 하기</button>
+
+        <h3 class="h3">JOIN MEMBER</h3>
+        <table>
+            <tbody>
+                <div>
+                    <tr>
+                    <td class="td1">아이디</td>
+                    <td class="td2">
+                        <input type="email" name="userId" placeholder="아이디(이메일) 입력" required/>
+                    </td>
+                    </tr>
+                </div>
+                <div>
+                    <tr>
+                        <td class="td1">비밀번호</td>
+                        <td class="td2">
+                        <input type="password" name="password" placeholder="비밀번호 입력" required/>
+                    </td>
+                    </tr>
+                </div>
+                <div>
+                    <tr>
+                        <td class="td1">비밀번호 확인</td>
+                        <td class="td2">
+                        <input type="password" name="rePassword" placeholder="비밀번호 확인" required/>
+                    </td>
+                    </tr>
+                </div>
+                <div>
+                    <tr>
+                        <td class="td1">이름</td>
+                        <td class="td2">
+                            <input type="text" name="userName" placeholder="이름 입력" required/>
+                        </td>
+                    </tr>
+                </div>
+                <div>
+                    <tr>
+                        <td class="td1">휴대전화</td>
+                        <td class="td2">
+                        <input type="tel" name="phone" placeholder="전화번호 입력" required/>
+                    </td>
+                    </tr>
+                </div>
+            </tbody>
+        </table>
+        <div style="text-align: center;">
+            <button>회원 가입</button>
         </div>
     </form>
 

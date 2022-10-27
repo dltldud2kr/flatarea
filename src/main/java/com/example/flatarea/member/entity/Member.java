@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.time.LocalDate;
@@ -23,8 +24,7 @@ public class Member implements MemberCode{
     private String phone;
     private String password;
 
-    private String age;
-    private String gender;
+
 
     private LocalDateTime lastUdt;  // 회원정보 수정일자
     private LocalDateTime regDt;    // 회원가입 일자

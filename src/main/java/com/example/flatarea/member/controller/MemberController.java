@@ -38,8 +38,6 @@ public class MemberController {
 
         System.out.println(parameter.toString());
 
-
-
         boolean result = memberService.register(parameter);
         model.addAttribute("result", result);
 

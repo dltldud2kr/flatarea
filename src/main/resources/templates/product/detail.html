@@ -7,28 +7,62 @@
 
         .info {
             width: 1000px;
-            white-space:nowrap;         /* 공백문자 한줄처리 */
-            overflow:hidden;            /* 넓이 1000px를 넘는 내용은 보이지않게 처리 */
-            text-overflow:ellipsis;     /* ...생략부호 처리 */
-
+            white-space: nowrap; /* 공백문자 한줄처리 */
+            overflow: hidden; /* 넓이 1000px를 넘는 내용은 보이지않게 처리 */
+            text-overflow: ellipsis; /* ...생략부호 처리 */
         }
 
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+
+    <script>
+        $(function () {
+
+        //     $('#submitForm').on('submit', function() {
+        //
+        //         var $thisForm = $(this);
+        //         // var $thisValue = $('#submitForm input[name=id]').val();
+        //         // if($thisValue < 1){
+        //         //     alert('로그인 후 이용해주세요.');
+        //         //     return false;
+        //         // }
+        //         var url='/api/product/req.api';
+        //         var parameter= {
+        //           id:$thisForm.find('input[name=id]').val()
+        //         };
+        //         axios
+        //             .post(url, parameter)
+        //             .then(function(response){
+        //
+        //         }).catch(function(err) {
+        //
+        //         });
+        //
+        //         return false;
+        //     });
+        // });
+    </script>
+
 </head>
 <body>
-    <div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
-    <div th:replace="/fragments/layout.html :: fragement-category-menu"></div>
-    <h1>제품 상세 정보</h1>
+<div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
+<div th:replace="/fragments/layout.html :: fragement-category-menu"></div>
+<h1>제품 상세 정보</h1>
+<div>
+    <h2>제품명: <span th:text="${detail.PName}">제품</span></h2>
+    <div th:utext="${detail.PInfo}">제품 상세 설명</div>
     <div>
-        <h2>제품명: <span th:text="${detail.PName}">제품</span></h2>
-        <div th:utext="${detail.PInfo}">제품 상세 설명</div>
-        <div>
-            <p>가격: <span th:text="${detail.price}"></span></p>
-        </div>
-        <div>
-            <button type="button">구매하기</button>
-            <button type="button">장바구니 담기</button>
-        </div>
+        <p>가격: <span th:text="${detail.price}"></span></p>
     </div>
+    <div>
+        <form id="submitForm" method="post" action="/product/purchase">
+            <input type="hidden" name="productId" th:value="${detail.id}"/>
+            <button type="submit">구매하기</button>
+        </form>
+        <button type="button">장바구니 담기</button>
+    </div>
+</div>
 </body>
 </html>
