@@ -23,9 +23,10 @@ public class MemberDto {
     boolean adminYn;
     String userStatus;
 
-    String age;
-    String gender;
-    LocalDateTime lastUdt;
+    String resetPasswordKey;
+    LocalDateTime resetPasswordLimitDt;
+
+    LocalDateTime lastUdt;  //회원정보 수정일자
 
     //추가 컬럼
     long totalCount;

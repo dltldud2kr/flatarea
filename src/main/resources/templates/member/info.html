@@ -8,6 +8,15 @@
         <h1>회원 정보 </h1>
         <div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
 
+        <div>
+            <a href="/member/info">회원 정보 수정</a>
+            |
+            <a href="/member/password">비밀번호 변경</a>
+            |
+            <a href="#">내 구매 목록</a>
+        </div>
+
+        <div th:text="${detail}"></div>
 
 </body>
 </html>

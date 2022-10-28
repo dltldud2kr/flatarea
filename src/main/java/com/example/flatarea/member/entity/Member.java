@@ -24,7 +24,8 @@ public class Member implements MemberCode{
     private String phone;
     private String password;
 
-
+    private String resetPasswordKey;
+    private LocalDateTime resetPasswordLimitDt;
 
     private LocalDateTime lastUdt;  // 회원정보 수정일자
     private LocalDateTime regDt;    // 회원가입 일자

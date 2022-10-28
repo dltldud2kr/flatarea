@@ -35,4 +35,5 @@ public interface MemberService extends UserDetailsService {
      * 회원 비밀번호 초기화
      */
     boolean updatePassword(String userId, String password);
+
 }
