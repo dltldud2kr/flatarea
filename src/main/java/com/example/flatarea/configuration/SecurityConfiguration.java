@@ -42,6 +42,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         , "/product"
                         , "/product/{id}"   //제품 상세정보 페이지는 로그인 없이 접속가능, 하지만 구매하기 버튼을 눌렀을 때
                                             // /product/purchase 로 이동하는데 왜 로그인을 요구 안 하는지 ?
+
+                                            // 일단 /purchase 로 변경해놨음.  (2022-12-14)
                 )
                 .permitAll();
 

@@ -6,6 +6,15 @@ import lombok.Data;
 public class OrderInput {
 
     long productId;
-    String recipient;
+    String recipientName;
+
+    String phone;
+    String recipientPhone;
+
+    String recipientAddr;
+    String recipientAddrDetail;
+    String orderRequest;
+
+
 
 }

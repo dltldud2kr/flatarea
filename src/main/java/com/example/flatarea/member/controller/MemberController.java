@@ -1,7 +1,7 @@
 package com.example.flatarea.member.controller;
 
 
-import com.example.flatarea.admin.dto.MemberDto;
+import com.example.flatarea.member.dto.MemberDto;
 import com.example.flatarea.member.model.MemberInput;
 import com.example.flatarea.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -55,6 +55,39 @@ public class MemberController {
 
         model.addAttribute("detail", detail);
         return "member/info";
+    }
+
+    @PostMapping("/member/info")
+    public String memberInfoSubmit(Principal principal
+                                   ,MemberInput parameter
+                                   ,Model model){
+
+        String userId = principal.getName();
+        parameter.setUserId(userId);
+        boolean result = memberService.updateMember(parameter);
+        if(!result){
+            model.addAttribute("message", "회원정보가 존재하지 않습니다.");
+            return "common/error";
+        }
+
+        return "redirect:/member/info";
+    }
+
+    @PostMapping("/member/password")
+    public String memberPasswordSubmit(Principal principal
+            , MemberInput parameter
+            , Model model){
+
+        String userId = principal.getName();
+        parameter.setUserId(userId);
+        boolean result = memberService.updateMemberPassword(parameter);
+
+        if(result != true){
+            model.addAttribute("message", "비밀번호가 일치하지 않습니다.");
+            return "common/error";
+        }
+
+        return "redirect:/member/info";
     }
 
     @GetMapping("/member/password")

@@ -33,6 +33,10 @@ public class Member implements MemberCode{
     private boolean adminYn;
     private String userStatus; //정지, 이용가능 상태
 
+    private String zipCode;
+    private String addr;
+    private String addrDetail;
+
 
 
 }

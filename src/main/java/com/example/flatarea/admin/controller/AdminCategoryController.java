@@ -1,11 +1,9 @@
 package com.example.flatarea.admin.controller;
 
 import com.example.flatarea.admin.dto.CategoryDto;
-import com.example.flatarea.admin.dto.MemberDto;
 import com.example.flatarea.admin.model.CategoryInput;
 import com.example.flatarea.admin.model.MemberParam;
 import com.example.flatarea.admin.service.CategoryService;
-import com.example.flatarea.util.PageUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

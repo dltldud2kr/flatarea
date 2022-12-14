@@ -1,6 +1,6 @@
 package com.example.flatarea.admin.controller;
 
-import com.example.flatarea.admin.dto.MemberDto;
+import com.example.flatarea.member.dto.MemberDto;
 import com.example.flatarea.admin.model.MemberParam;
 import com.example.flatarea.admin.model.MemberInput;
 import com.example.flatarea.member.service.MemberService;

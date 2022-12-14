@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>주문요청</h1>
+
+<div class="list">
+
+    <div>
+        <form methid="posst" action="/member/basket/add.do">
+        <input type="text" name="basketName"/>
+        <button type="submit">추가</button>
+        </form>
+    </div>
+
+    <table>
+        <tbody>
+        <tr>
+            <th>
+                받으시는분
+            </th>
+            <td>
+                <input type="text" name="recipient"/>
+            </td>
+        </tr>
+
+        <tr>
+            <th>주소</th>
+        </tr>
+        <tr>
+            <th>휴대전화</th>
+        </tr>
+        <tr>
+            <th>이메일</th>
+        </tr>
+        <tr>
+            <th>배송 메시지</th>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="buttons">
+        <button type="submit">주문하기</button>
+
+    </div>
+</div>
+
+</body>
+</html>

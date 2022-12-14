@@ -46,7 +46,7 @@
     
     <select id="selectList"
             parameterType="com.example.flatarea.admin.model.MemberParam"
-            resultType="com.example.flatarea.admin.dto.MemberDto">
+            resultType="com.example.flatarea.member.dto.MemberDto">
         select *
         from member
         where 1 = 1

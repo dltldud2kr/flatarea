@@ -23,7 +23,8 @@ public class ProductController {
     private final BrandService brandService;
 
 
-    @GetMapping(value = {"/", "/product", "/product/**"})
+
+    @GetMapping(value = {"/", "/product", "/product/**","/product/purchase"})
 
     public String list(Model model, ProductParam parameter) {
 

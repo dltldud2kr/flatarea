@@ -1,6 +1,6 @@
 package com.example.flatarea.member.service;
 
-import com.example.flatarea.admin.dto.MemberDto;
+import com.example.flatarea.member.dto.MemberDto;
 import com.example.flatarea.admin.mapper.MemberMapper;
 import com.example.flatarea.admin.model.MemberParam;
 import com.example.flatarea.member.entity.Member;
@@ -115,6 +115,49 @@ public class MemberServiceImpl implements MemberService {
 
         String encPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
+        member.setPassword(encPassword);
+        memberRepository.save(member);
+
+        return true;
+    }
+
+    @Override
+    public boolean updateMember(MemberInput parameter) {
+        String userId = parameter.getUserId();
+
+        Optional<Member> optionalMember = memberRepository.findById(userId);
+        if (!optionalMember.isPresent()) {
+            return false;
+        }
+        Member member = optionalMember.get();
+
+        member.setPhone(parameter.getPhone());
+        member.setZipCode(parameter.getZipCode());
+        member.setAddr(parameter.getAddr());
+        member.setAddrDetail(parameter.getAddrDetail());
+        member.setLastUdt(LocalDateTime.now());
+        memberRepository.save(member);
+
+        return true;
+    }
+
+    @Override
+    public boolean updateMemberPassword(MemberInput parameter) {
+
+        String userId = parameter.getUserId();
+
+        Optional<Member> optionalMember = memberRepository.findById(userId);
+        if (!optionalMember.isPresent()) {
+            return false;
+        }
+
+        Member member = optionalMember.get();
+
+        if(!BCrypt.checkpw(parameter.getPassword(), member.getPassword())){
+            return false;
+        }
+
+        String encPassword = BCrypt.hashpw(parameter.getNewPassword(), BCrypt.gensalt());
         member.setPassword(encPassword);
         memberRepository.save(member);
 

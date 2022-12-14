@@ -1,6 +1,6 @@
 package com.example.flatarea.admin.mapper;
 
-import com.example.flatarea.admin.dto.MemberDto;
+import com.example.flatarea.member.dto.MemberDto;
 import com.example.flatarea.admin.model.MemberParam;
 import org.apache.ibatis.annotations.Mapper;
 

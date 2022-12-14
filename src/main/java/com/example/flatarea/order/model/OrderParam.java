@@ -7,4 +7,5 @@ public class OrderParam {
 
     long productId;
 
+
 }
