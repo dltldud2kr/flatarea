@@ -41,12 +41,12 @@
         <p>가격: <span th:text="${detail.price}"></span></p>
     </div>
     <div>
-        <form id="submitForm" method="post" action="/purchase">
+        <form id="purchaseForm" method="post" action="/purchase">
             <input type="hidden" name="productId" th:value="${detail.id}"/>
             <button type="submit">구매하기</button>
         </form>
 
-        <form id="basketForm" method="post" action="/member/basket/add.do">
+        <form id="basketForm" method="post" action="/basket/add.do">
             <input type="hidden" name="productId" th:value="${detail.id}"/>
             <button type="submit">장바구니 담기</button>
         </form>

@@ -24,13 +24,14 @@ public class ProductController {
 
 
 
-    @GetMapping(value = {"/", "/product", "/product/**","/product/purchase"})
+    @GetMapping(value = {"/", "/product", "/product/**","/purchase"})
 
     public String list(Model model, ProductParam parameter) {
 
         List<ProductDto> list = productService.frontList(parameter);
         model.addAttribute("list", list);
 
+        // 카테고리 메뉴바
         int productTotalCount = 0;
         List<BrandDto> brandList = brandService.frontList(BrandDto.builder().build());
         List<CategoryDto> categoryList = categoryService.frontList(CategoryDto.builder().build());
@@ -61,6 +62,7 @@ public class ProductController {
         model.addAttribute("categoryList", categoryList(parameter));
         model.addAttribute("productTotalCount", productTotalCount(brandList(parameter)));
         return "product/detail";
+
     }
 
 

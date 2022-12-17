@@ -18,10 +18,13 @@ public class Basket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    String pName;   //제품명
+    long productId;
+    String userId;
+    String productName;
 
-
+    LocalDateTime addDt; //추가 일시
     long price;         //상품 가격
     int purchaseAmount;    //구매 수량
-    int sum; // 합계
+
+
 }

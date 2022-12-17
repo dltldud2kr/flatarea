@@ -1,49 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 </head>
 <body>
-<h1>주문요청</h1>
 
 <div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
 <div th:replace="/fragments/layout.html :: fragement-category-menu"></div>
 
-<div class="detail">
+<h3>배송 정보</h3>
+<div>
+    <form id="purchaseForm" method="post" >
     <table>
         <tbody>
         <tr>
             <th>
-                주문자 정보
+                받으시는 분
             </th>
             <td>
-                <input type="text" name="recipientName" readonly/>
-            </td>
-        </tr>
-
-        <tr>
-            <th>핸드폰 번호</th>
-            <td>
-                <input type="text" name="phone" readonly/>
+                <input type="text" name="recipientName"/>
             </td>
         </tr>
         <tr>
-            <th>수취인 전화번호</th>
+            <th>휴대전화</th>
             <td>
-                <input type="text" name="recipientPhone"/>
+                <input type="text" name="phone"/>
             </td>
         </tr>
         <tr>
             <th>주소</th>
             <td>
-                <input type="text name=recipientAddr"/>
-                <button type="button">검색</button>
-            </td>
-            <td>
-                <input type="text" name="recipientAddrDetail"/>
+                <div>
+                <input type="text" id="zipCode" name="zipCode"  />
+                <button type="button">우편번호</button>
+                </div>
+                <div>
+                    <input type="text" id="addr" name="addr"  placeholder="주소 입력"/>
+                    <input type="text" id="addrDetail" name="addrDetail"  placeholder="상세주소"/>
+                </div>
             </td>
         </tr>
         <tr>
@@ -54,6 +52,7 @@
         </tr>
         </tbody>
     </table>
+    </form>
 
     <div class="buttons">
         <button type="submit">주문하기</button>

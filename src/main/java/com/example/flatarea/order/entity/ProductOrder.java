@@ -32,14 +32,9 @@ public class ProductOrder {
     @Lob        //텍스트를 많이 잡기 위한 어노테이션
     String orderRequest;    //주문 요청사항
 
-    @Column(length = 1000)
-    String recipientAddr;
-    String recipientAddrDetail;
 
-
-
-
-
+    String addr;
+    String addrDetail;
 
 
 }

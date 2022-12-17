@@ -7,12 +7,10 @@ public class OrderInput {
 
     long productId;
     String recipientName;
-
     String phone;
-    String recipientPhone;
 
-    String recipientAddr;
-    String recipientAddrDetail;
+    String addr;
+    String addrDetail;
     String orderRequest;
 
 

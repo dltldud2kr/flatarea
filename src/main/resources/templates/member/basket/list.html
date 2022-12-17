@@ -43,7 +43,7 @@
 
 
 <h3>Shopping Cart</h3>
-<div class="list">
+<div >
     <table>
         <thead>
         <tr>
@@ -53,7 +53,7 @@
         </thead>
         <tbody>
         <tr th:each="x : ${list}">
-            <td th:text="${x.PName}">옷</td>
+            <td th:text="${x.productName}">옷</td>
             <td th:text="${x.price}">가격</td>
         </tr>
 

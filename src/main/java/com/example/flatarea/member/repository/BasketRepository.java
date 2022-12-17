@@ -9,5 +9,6 @@ import java.util.Optional;
 
 public interface BasketRepository extends JpaRepository<Basket, Long> {
 
+    long countByProductIdAndUserId(long productId, String userId);
 
 }
