@@ -24,6 +24,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -67,34 +70,6 @@ public class AdminProductController {
      * 제품 등록
      */
 
-    /*
-    @GetMapping("/admin/product/add.do")
-    public String add(Model model, ProductInput parameter) {
-
-        long id = parameter.getId();
-        ProductDto existProduct = productService.getById(id);
-
-        model.addAttribute("detail",existProduct);
-
-        return "admin/product/add";
-    }
-
-    @GetMapping("/admin/product/edit.do")
-    public String edit(Model model , ProductInput parameter) {
-
-        long id = parameter.getId();
-        ProductDto existProduct = productService.getById(id);
-
-        if(existProduct == null){
-            //에러처리
-            model.addAttribute("message","제품정보가 존재하지 않습니다.");
-            return "common/error";
-        }
-
-        return "admin/product/add";
-    }
-
-     */
 
     @GetMapping(value = {"/admin/product/add.do", "/admin/product/edit.do"})
     public String add(Model model , HttpServletRequest request ,
@@ -131,7 +106,7 @@ public class AdminProductController {
             // 업로드된 파일의 이름
             String originalFilename = file.getOriginalFilename();
             // 파일이 저장될 경로
-            String localPath = "C:/project/flatarea/files";
+            String localPath = "C:/project/flatarea/src/main/resources/static/image";
             // 새로운 파일 객체 생성
             File newFile = new File(localPath + File.separator + originalFilename);
 
@@ -143,9 +118,15 @@ public class AdminProductController {
                 log.info(e.getMessage());
             }
 
-            // 파일이 저장된 경로를 데이터베이스에 저장
-            String filePath = "/files/" + originalFilename; // 예를 들어 파일이 저장된 경로가 "/files/filename.jpg"라면
-            System.out.println("================" + filePath + "==========");
+
+            String encodedFilename = null;
+            try {
+                encodedFilename = URLEncoder.encode(originalFilename, StandardCharsets.UTF_8.toString());
+            } catch (UnsupportedEncodingException e) {
+                log.info("#################### - 1");
+                log.info(e.getMessage());
+            }
+            String filePath = "/image/" + encodedFilename; // 파일명에 대한 URL 인코딩 적용
 
             parameter.setImagePath(filePath); // ProductInput 클래스에 imagePath 필드가 있다고 가정합니다.
         }

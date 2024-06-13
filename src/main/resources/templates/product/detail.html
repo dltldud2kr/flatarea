@@ -36,6 +36,13 @@
 <h1>제품 상세 정보</h1>
 <div>
     <h2>제품명: <span th:text="${detail.PName}">제품</span></h2>
+
+    <!-- 추가된 부분 -->
+    <div>
+        <img th:src="@{${detail.imagePath}}" >
+    </div>
+
+    <!-- /추가된 부분 -->
     <div th:utext="${detail.PInfo}">제품 상세 설명</div>
     <div>
         <p>가격: <span th:text="${detail.price}"></span></p>

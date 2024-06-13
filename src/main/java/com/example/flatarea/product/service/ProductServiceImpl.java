@@ -134,10 +134,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDto frontDetail(long id) {
-
         Optional<Product> optionalProduct = productRepository.findById(id);
         if(optionalProduct.isPresent()){
-            return ProductDto.of(optionalProduct.get());
+            ProductDto productDto = ProductDto.of(optionalProduct.get());
+            // 이미지 경로를 웹 애플리케이션의 상대 경로로 수정하지 않고 그대로 사용
+
+            System.out.println("==========================이미지path : " + productDto.getImagePath() + "==============");
+
+            return productDto;
         }
         return null;
     }
