@@ -14,6 +14,7 @@ public class ProductInput {
     String summary;
     String pInfo;
     long price;
+    String imagePath;
 
     int stockAmount;
     int sellAmount;

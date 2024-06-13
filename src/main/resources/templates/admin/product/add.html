@@ -45,23 +45,23 @@
     </script>
 </head>
 <body>
-      <h1>제품 관리 - 제품 등록</h1>
-      <div th:replace="/fragments/layout.html :: fragment-admin-body-menu"></div>
+<h1>제품 관리 - 제품 등록</h1>
+<div th:replace="/fragments/layout.html :: fragment-admin-body-menu"></div>
 
 <div class="detail">
 
-    <form id="submitForm" method="post">
+    <form id="submitForm" method="post" enctype="multipart/form-data">
 
-    <table>
-        <tbody>
+        <table>
+            <tbody>
             <tr>
                 <th>제품 카테고리</th>
                 <td>
                     <select name="categoryId" required>
-                    <option value="">카테고리선택</option>
-                    <option
-                            th:selected="${detail.categoryId == x.id}"
-                            th:each="x : ${category}" th:value="${x.id}" th:text="${x.categoryName}"></option>
+                        <option value="">카테고리선택</option>
+                        <option
+                                th:selected="${detail.categoryId == x.id}"
+                                th:each="x : ${category}" th:value="${x.id}" th:text="${x.categoryName}"></option>
                     </select>
                 </td>
             </tr>
@@ -122,28 +122,35 @@
                 </td>
             </tr>
 
+            <tr>
+                <th>첨부파일</th>
+                <td>
+                    <input type="file" name="file" />
+                </td>
+            </tr>
 
-        </tbody>
-    </table>
 
-    <div class="buttons">
-        <button th:if="${editMode}" type="submit">제품 수정 하기</button>
-        <button th:if="${!editMode}" type="submit">제품 등록 하기</button>
-        <a href="/admin/product/list.do"> 목록 이동 </a>
-    </div>
+            </tbody>
+        </table>
+
+        <div class="buttons">
+            <button th:if="${editMode}" type="submit">제품 수정 하기</button>
+            <button th:if="${!editMode}" type="submit">제품 등록 하기</button>
+            <a href="/admin/product/list.do"> 목록 이동 </a>
+        </div>
 
     </form>
 </div>
 
-      <script type="text/javascript" src="/res/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
-      <script type="text/javascript">
-          var oEditors = [];
-          nhn.husky.EZCreator.createInIFrame({
-              oAppRef: oEditors,
-              elPlaceHolder: "pInfo",
-              sSkinURI: "/res/se2/SmartEditor2Skin.html",
-              fCreator: "createSEditor2"
-          });
-      </script>
+<script type="text/javascript" src="/res/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript">
+    var oEditors = [];
+    nhn.husky.EZCreator.createInIFrame({
+        oAppRef: oEditors,
+        elPlaceHolder: "pInfo",
+        sSkinURI: "/res/se2/SmartEditor2Skin.html",
+        fCreator: "createSEditor2"
+    });
+</script>
 </body>
 </html>

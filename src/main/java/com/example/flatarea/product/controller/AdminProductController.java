@@ -8,16 +8,29 @@ import com.example.flatarea.product.dto.ProductDto;
 import com.example.flatarea.product.service.ProductService;
 import com.example.flatarea.util.PageUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 public class AdminProductController {
@@ -112,7 +125,30 @@ public class AdminProductController {
 
     @PostMapping(value = {"/admin/product/edit.do", "/admin/product/add.do"})
     public String addSubmit(Model model, HttpServletRequest request ,
-                            ProductInput parameter) {
+                            ProductInput parameter, @RequestParam("file") MultipartFile file) {
+
+        if (!file.isEmpty()){
+            // 업로드된 파일의 이름
+            String originalFilename = file.getOriginalFilename();
+            // 파일이 저장될 경로
+            String localPath = "C:/project/flatarea/files";
+            // 새로운 파일 객체 생성
+            File newFile = new File(localPath + File.separator + originalFilename);
+
+            try {
+                // 파일을 지정된 경로로 복사
+                FileCopyUtils.copy(file.getInputStream(), new FileOutputStream(newFile));
+            } catch (IOException e){
+                log.info("#################### - 1");
+                log.info(e.getMessage());
+            }
+
+            // 파일이 저장된 경로를 데이터베이스에 저장
+            String filePath = "/files/" + originalFilename; // 예를 들어 파일이 저장된 경로가 "/files/filename.jpg"라면
+            System.out.println("================" + filePath + "==========");
+
+            parameter.setImagePath(filePath); // ProductInput 클래스에 imagePath 필드가 있다고 가정합니다.
+        }
 
         boolean editMode = request.getRequestURI().contains("/edit.do");
 

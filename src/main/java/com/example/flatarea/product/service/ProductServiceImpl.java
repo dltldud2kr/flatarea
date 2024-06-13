@@ -34,6 +34,7 @@ public class ProductServiceImpl implements ProductService {
                 .stockAmount(parameter.getStockAmount())
                 .sellAmount(parameter.getSellAmount())
                 .regDt(LocalDateTime.now())
+                .imagePath(parameter.getImagePath())
                 .build();
 
         productRepository.save(product);
