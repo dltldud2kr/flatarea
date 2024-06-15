@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>관리자 페이지</title>
 </head>
 <body>
-      <h1>관리자 메인 화면</h1>
-      <div th:replace="/fragments/layout.html :: fragment-admin-body-menu"></div>
+
+<div th:replace="/fragments/head.html :: fragment-admin-body-menu"></div>
+
+
 </body>
 </html>

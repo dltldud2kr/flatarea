@@ -3,93 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <title>회원가입</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        table {
-            border-collapse: collapse;
-            margin-left: 350px;
+        .form-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            /*background-color: #f9f9f9;*/
         }
-
-        table th, table td {
-            height: 40px;
+        .form-title {
+            text-align: center;
+            margin-bottom: 20px;
         }
-        .td1{
-            width: 150px;
-        }
-        .td2{
-            width: 400px;
-        }
-        .h3{
-            margin-left: 330px ;
-            height: 40px;
-        }
-        input {
-            height: 20px;
-        }
-        button {
-            height: 40px;
-            width: 100px;
-            color:white;
-            background-color: #000000;
-            border-radius: 4px;
-            margin-top: 60px;
+        .underline-form-control {
+            border: none;
+            border-bottom: 1px solid #ccc;
+            box-shadow: none; /* 선택적으로 박스 쉐도우 제거 */
         }
     </style>
 </head>
 <body>
-    <div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
+<h1></h1>
+<div th:replace="/fragments/head.html :: fragment-body-menu"></div>
 
-    <form method="post">
+<div class="container">
+    <div class="form-container">
+        <h3 class="form-title">JOIN MEMBER</h3>
+        <form method="post">
+            <div class="form-group">
+                <label for="userName">이름</label>
+                <input type="text" class="form-control underline-form-control" id="userName" name="userName" placeholder="이름 입력" required>
+            </div>
+            <div class="form-group">
+                <label for="userId">이메일</label>
+                <input type="email" class="form-control underline-form-control" id="userId" name="userId" placeholder="이메일 입력" required>
+            </div>
+            <div class="form-group">
+                <label for="password">비밀번호</label>
+                <input type="password" class="form-control underline-form-control" id="password" name="password" placeholder="비밀번호 입력" required>
+            </div>
+            <div class="form-group">
+                <label for="rePassword">비밀번호 확인</label>
+                <input type="password" class="form-control underline-form-control" id="rePassword" name="rePassword" placeholder="비밀번호 확인" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">휴대전화</label>
+                <input type="tel" class="form-control underline-form-control" id="phone" name="phone" placeholder="전화번호 입력" required>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-dark btn-block">가입하기</button>
+            </div>
+        </form>
+    </div>
+</div>
 
-
-        <h3 class="h3">JOIN MEMBER</h3>
-        <table>
-            <tbody>
-                <div>
-                    <tr>
-                    <td class="td1">아이디</td>
-                    <td class="td2">
-                        <input type="email" name="userId" placeholder="아이디(이메일) 입력" required/>
-                    </td>
-                    </tr>
-                </div>
-                <div>
-                    <tr>
-                        <td class="td1">비밀번호</td>
-                        <td class="td2">
-                        <input type="password" name="password" placeholder="비밀번호 입력" required/>
-                    </td>
-                    </tr>
-                </div>
-                <div>
-                    <tr>
-                        <td class="td1">비밀번호 확인</td>
-                        <td class="td2">
-                        <input type="password" name="rePassword" placeholder="비밀번호 확인" required/>
-                    </td>
-                    </tr>
-                </div>
-                <div>
-                    <tr>
-                        <td class="td1">이름</td>
-                        <td class="td2">
-                            <input type="text" name="userName" placeholder="이름 입력" required/>
-                        </td>
-                    </tr>
-                </div>
-                <div>
-                    <tr>
-                        <td class="td1">휴대전화</td>
-                        <td class="td2">
-                        <input type="tel" name="phone" placeholder="전화번호 입력" required/>
-                    </td>
-                    </tr>
-                </div>
-            </tbody>
-        </table>
-        <div style="text-align: center;">
-            <button>회원 가입</button>
-        </div>
-    </form>
-
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

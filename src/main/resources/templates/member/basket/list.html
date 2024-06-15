@@ -4,26 +4,72 @@
     <meta charset="UTF-8">
     <title>장바구니</title>
     <style>
-        .list table {
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 20px;
         }
 
-        .list table th, .list table td {
-            border: solid 1px #000;
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
         }
 
-        .searchForm {
-            position: relative;
-            padding: 5px 0 1px 0;
+        th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+        }
+
+        .total {
+            margin-top: 20px;
             text-align: right;
         }
 
-        .searchForm .total-count {
-            position: absolute;
-            top: -10px;
-            float: left;
+        .total span {
+            font-weight: bold;
+        }
 
+        .purchase-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .purchase-button {
+            padding: 10px 20px;
+            background-color: #000000;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .purchase-button:hover {
+            background-color: #0056b3;
         }
 
         .pager {
@@ -31,37 +77,67 @@
             text-align: center;
         }
 
-        .pager a.on {
+        .pager a {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #000000;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .pager a:hover {
+            background-color: #0056b3;
+        }
+
+        .pager .on {
             font-weight: bold;
             color: red;
+        }
+
+        .checkbox-col {
+            width: 50px;
         }
     </style>
 </head>
 <body>
-<div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
-<div th:replace="/fragments/layout.html :: fragement-category-menu"></div>
 
+<div th:replace="/fragments/head.html :: fragment-body-menu"></div>
+<div th:replace="/fragments/head.html :: fragement-category-menu"></div>
 
-<h3>Shopping Cart</h3>
-<div >
-    <table>
-        <thead>
-        <tr>
-            <th>제품명</th>
-            <th>가격</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="x : ${list}">
-            <td th:text="${x.productName}">옷</td>
-            <td th:text="${x.price}">가격</td>
-        </tr>
+<div class="container">
+    <h3>장바구니</h3>
+    <div class="list">
+        <table>
+            <thead>
+            <tr>
+                <th class="checkbox-col"><input type="checkbox" class="select-all" onchange="toggleCheckbox(this)" /></th>
+                <th>제품명</th>
+                <th>가격</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="x : ${list}">
+                <td class="checkbox-col"><input type="checkbox" class="checkbox" /></td>
+                <td th:text="${x.productName}">옷</td>
+                <td th:text="${x.price}">가격</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
-        </tbody>
+    <div class="total">
+        <span>총 가격: <span th:text="${totalPrice}"></span></span>
+    </div>
 
-    </table>
+    <div class="purchase-buttons">
+        <button class="purchase-button" onclick="purchaseSelected()">선택한 제품 구매</button>
+        <button class="purchase-button" onclick="purchaseAll()">전체 구매</button>
+    </div>
+
+    <div class="pager">
+        <a href="#" class="on">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+    </div>
 </div>
-
-
-</body>
-</html>

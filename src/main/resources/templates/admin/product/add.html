@@ -2,23 +2,47 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>관리자 화면</title>
+    <title>관리자 화면 - 제품 등록 및 수정</title>
     <style>
-        .detail table{
+
+        .detail {
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+        }
+        .detail table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 20px;
         }
         .detail table th, .detail table td {
-            border:solid 1px #000;
+            border: solid 1px #ccc;
+            padding: 10px;
         }
-
+        .detail select, .detail input[type="text"], .detail textarea {
+            width: calc(100% - 12px); /* 너비 계산 */
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+        .detail select {
+            height: 34px;
+        }
+        .detail textarea {
+            height: 120px;
+        }
         .buttons {
-            margin-top: 20px;
+            margin-top: 10px;
             text-align: center;
         }
         .buttons a, .buttons button {
-
-            border-width: 0;
+            border: none;
             background-color: transparent;
             text-decoration: underline;
             font-size: 14px;
@@ -26,30 +50,39 @@
             height: 20px;
             color: #000000;
             cursor: pointer;
+            transition: color 0.3s;
+            margin-right: 10px;
         }
-
-
+        .buttons a:hover, .buttons button:hover {
+            color: #007bff;
+        }
     </style>
 
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/res/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
     <script>
         $(document).ready(function() {
+            // 에디터 초기화
+            var oEditors = [];
+            nhn.husky.EZCreator.createInIFrame({
+                oAppRef: oEditors,
+                elPlaceHolder: "pInfo",
+                sSkinURI: "/res/se2/SmartEditor2Skin.html",
+                fCreator: "createSEditor2"
+            });
 
+            // 폼 제출 시 에디터의 내용을 textarea에 반영
             $('#submitForm').on('submit', function () {
-                // 에디터의 내용이 textarea에 적용된다.
                 oEditors.getById["pInfo"].exec("UPDATE_CONTENTS_FIELD", []);
-
             });
 
         });
     </script>
 </head>
 <body>
-<h1>제품 관리 - 제품 등록</h1>
-<div th:replace="/fragments/layout.html :: fragment-admin-body-menu"></div>
+<div th:replace="/fragments/head.html :: fragment-admin-body-menu"></div>
 
 <div class="detail">
-
     <form id="submitForm" method="post" enctype="multipart/form-data">
 
         <table>
@@ -58,10 +91,8 @@
                 <th>제품 카테고리</th>
                 <td>
                     <select name="categoryId" required>
-                        <option value="">카테고리선택</option>
-                        <option
-                                th:selected="${detail.categoryId == x.id}"
-                                th:each="x : ${category}" th:value="${x.id}" th:text="${x.categoryName}"></option>
+                        <option value="">카테고리 선택</option>
+                        <option th:selected="${detail.categoryId == x.id}" th:each="x : ${category}" th:value="${x.id}" th:text="${x.categoryName}"></option>
                     </select>
                 </td>
             </tr>
@@ -70,10 +101,8 @@
                 <th>제품 브랜드</th>
                 <td>
                     <select name="brandId" required>
-                        <option value="">브랜드선택</option>
-                        <option
-                                th:selected="${detail.brandId == x.id}"
-                                th:each="x : ${brand}" th:value="${x.id}" th:text="${x.brandName}"></option>
+                        <option value="">브랜드 선택</option>
+                        <option th:selected="${detail.brandId == x.id}" th:each="x : ${brand}" th:value="${x.id}" th:text="${x.brandName}"></option>
                     </select>
                 </td>
             </tr>
@@ -81,76 +110,63 @@
             <tr>
                 <th>제품명</th>
                 <td>
-                    <input th:value="${detail.PName}" type="text" name="pName" required placeholder="제품명 입력"/>
+                    <input type="text" name="pName" th:value="${detail.pName}" required placeholder="제품명 입력"/>
                 </td>
             </tr>
 
             <tr>
-                <th>
-                    요약문구
-                </th>
+                <th>요약 문구</th>
                 <td>
-                    <textarea th:text="${detail.summary}" name="summary" required placeholder="키워드 입력"></textarea>
+                    <textarea name="summary" required placeholder="요약 문구 입력" th:text="${detail.summary}"></textarea>
                 </td>
             </tr>
 
             <tr>
-                <th>상품설명</th>
+                <th>상품 설명</th>
                 <td>
-                    <textarea th:text="${detail.PInfo}" id="pInfo" name="pInfo" placeholder="상품설명 입력"></textarea>
+                    <textarea id="pInfo" name="pInfo" placeholder="상품 설명 입력">${detail.pInfo}</textarea>
                 </td>
             </tr>
 
             <tr>
                 <th>판매가</th>
                 <td>
-                    <input th:value="${detail.price}" type="text" name="price" required placeholder="상품가격 입력"/>
+                    <input type="text" name="price" th:value="${detail.price}" required placeholder="판매가 입력"/>
                 </td>
             </tr>
 
             <tr>
-                <th>재고수량</th>
+                <th>재고 수량</th>
                 <td>
-                    <input th:value="${detail.stockAmount}" type="text" name="stockAmount" required placeholder="재고수량 입력"/>
+                    <input type="text" name="stockAmount" th:value="${detail.stockAmount}" required placeholder="재고 수량 입력"/>
                 </td>
             </tr>
 
             <tr>
-                <th>판매수량</th>
+                <th>판매 수량</th>
                 <td>
-                    <input th:value="${detail.sellAmount}" type="text" name="sellAmount" placeholder="추후에 작업"/>
+                    <input type="text" name="sellAmount" th:value="${detail.sellAmount}" placeholder="판매 수량 입력"/>
                 </td>
             </tr>
 
             <tr>
-                <th>첨부파일</th>
+                <th>첨부 파일</th>
                 <td>
-                    <input type="file" name="file" />
+                    <input type="file" name="file"/>
                 </td>
             </tr>
-
 
             </tbody>
         </table>
 
         <div class="buttons">
-            <button th:if="${editMode}" type="submit">제품 수정 하기</button>
-            <button th:if="${!editMode}" type="submit">제품 등록 하기</button>
-            <a href="/admin/product/list.do"> 목록 이동 </a>
+            <button th:if="${editMode}" type="submit">제품 수정하기</button>
+            <button th:if="${!editMode}" type="submit">제품 등록하기</button>
+            <a href="/admin/product/list.do">목록 이동</a>
         </div>
 
     </form>
 </div>
 
-<script type="text/javascript" src="/res/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
-<script type="text/javascript">
-    var oEditors = [];
-    nhn.husky.EZCreator.createInIFrame({
-        oAppRef: oEditors,
-        elPlaceHolder: "pInfo",
-        sSkinURI: "/res/se2/SmartEditor2Skin.html",
-        fCreator: "createSEditor2"
-    });
-</script>
 </body>
 </html>

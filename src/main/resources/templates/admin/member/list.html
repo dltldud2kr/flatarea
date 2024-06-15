@@ -4,42 +4,78 @@
     <meta charset="UTF-8">
     <title>관리자 화면</title>
     <style>
-        .list table {
+
+
+        table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 20px;
+            border: 1px solid #ccc;
         }
 
-        .list table th, .list table td {
-            border: solid 1px #000;
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #f0f0f0;
+            font-weight: bold;
         }
 
         .searchForm {
-            position: relative;
-            padding: 5px 0 1px 0;
+            margin-bottom: 20px;
             text-align: right;
         }
 
-        .searchForm .total-count {
-            position: absolute;
-            top: -10px;
-            float: left;
+        .searchForm select, .searchForm input[type="search"], .searchForm button {
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-left: 5px;
+        }
 
+        .searchForm button {
+            background-color: #000000;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .searchForm button:hover {
+            background-color: #0056b3;
         }
 
         .pager {
-            margin-top: 20px;
             text-align: center;
+            margin-top: 20px;
         }
 
-        .pager a.on {
+        .pager a {
+            display: inline-block;
+            padding: 8px 12px;
+            text-decoration: none;
+            background-color: #000000;
+            color: #fff;
+            border-radius: 4px;
+            margin-right: 5px;
+        }
+
+        .pager a:hover {
+            background-color: #000000;
+        }
+
+        .pager a.active {
+            background-color: #0056b3;
             font-weight: bold;
-            color: red;
         }
     </style>
+
 </head>
 <body>
-<h1>회원 관리 </h1>
-<div th:replace="/fragments/layout.html :: fragment-admin-body-menu"></div>
+<div th:replace="/fragments/head.html :: fragment-admin-body-menu"></div>
 
 <div class="list">
 

@@ -4,97 +4,137 @@
     <meta charset="UTF-8">
     <title>관리자 화면</title>
     <style>
-        .list table{
+
+        .list table {
             width: 100%;
             border-collapse: collapse;
+            border: 2px solid #ccc;
+            margin-top: 20px;
         }
         .list table th, .list table td {
-            border:solid 1px #000;
+            border: solid 1px #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+        .list table th {
+            background-color: #f2f2f2;
         }
         p.nothing {
             text-align: center;
-            padding : 100px;
+            padding: 100px;
+            font-size: 18px;
+            color: #888;
         }
         .inline-div {
             display: inline-block;
+            margin-right: 5px;
         }
-
+        form {
+            margin-top: 10px;
+        }
+        form input[type="text"], form button {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        form button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px; /* 수정 */
+        }
+        form button:hover {
+            background-color: #0056b3;
+        }
+        .update-button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px; /* 수정 */
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .update-button:hover {
+            background-color: #218838;
+        }
+        form[name=deleteForm] button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px; /* 수정 */
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        form[name=deleteForm] button:hover {
+            background-color: #c82333;
+        }
     </style>
+
 
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function() {
-            $('form[name=deleteForm]').on('submit',function() {
-                if(!confirm('브랜드를 삭제하시겠습니까?')) {
+            $('form[name=deleteForm]').on('submit', function() {
+                if (!confirm('브랜드를 삭제하시겠습니까?')) {
                     return false;
                 }
             });
 
-            $('button.update-button').on('click', function(){
-
-                if(!confirm('브랜드를 수정하시겠습니까?')){
+            $('button.update-button').on('click', function() {
+                if (!confirm('브랜드를 수정하시겠습니까?')) {
                     return false;
                 }
-
                 var $this = $(this);
                 var $tr = $this.closest('tr');
-
                 var id = $tr.find('input[name=id]').val();
                 var brandName = $tr.find('input[name=brandName]').val();
                 var sortValue = $tr.find('input[name=sortValue]').val();
-                var usingYn = $tr.find('input[type=checkbox]')[0].checked;
-
-                $updateForm = $('form[name=updateForm]');
-                $updateForm.find('input[name=id]').val( id );
-                $updateForm.find('input[name=brandName]').val( brandName );
-                $updateForm.find('input[name=sortValue]').val( sortValue );
-                $updateForm.find('input[name=usingYn]').val( usingYn );
+                var usingYn = $tr.find('input[type=checkbox]').prop('checked');
+                var $updateForm = $('form[name=updateForm]');
+                $updateForm.find('input[name=id]').val(id);
+                $updateForm.find('input[name=brandName]').val(brandName);
+                $updateForm.find('input[name=sortValue]').val(sortValue);
+                $updateForm.find('input[name=usingYn]').val(usingYn);
                 $updateForm.submit();
-
             });
-
         });
     </script>
 </head>
 <body>
-      <h1>카테고리 관리 </h1>
-      <div th:replace="/fragments/layout.html :: fragment-admin-body-menu"></div>
+<div th:replace="/fragments/head.html :: fragment-admin-body-menu"></div>
 
+<div class="list">
+    <form method="post" action="/admin/brand/add.do">
+        <input type="text" name="brandName" required placeholder="브랜드명 입력"/>
+        <button type="submit">추가</button>
+    </form>
 
-    <div class="list">
-
-        <div>
-            <form method="post" action="/admin/brand/add.do">
-                <input type="text" name="brandName" required placeholder="브랜드명 입력"/>
-                <button type="submit">추가</button>
-            </form>
-
-        </div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>브랜드명</th>
-                    <th>순서</th>
-                    <th>사용여부</th>
-                    <th>비고</th>
-                </tr>
-            </thead>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>브랜드명</th>
+            <th>순서</th>
+            <th>사용여부</th>
+            <th>비고</th>
+        </tr>
+        </thead>
         <tbody>
-
         <tr th:each="x : ${list}">
-            <td th:text="${x.id}">
+            <td>
                 <input type="hidden" name="id" th:value="${x.id}"/>
                 <p th:text="${x.id}">1</p>
             </td>
             <td>
-                <input th:value="${x.brandName}" type="text" name="brandName"/>
+                <input type="text" name="brandName" th:value="${x.brandName}"/>
             </td>
             <td>
-                <input th:value="${x.sortValue}" type="text" name="sortValue"/>
+                <input type="text" name="sortValue" th:value="${x.sortValue}"/>
             </td>
             <td>
-                <input th:checked="${x.usingYn}" type="checkbox" th:id="'usingYn_' + ${x.id}" th:name="'usingYn' + ${x.id}" value="true"/>
+                <input type="checkbox" name="usingYn" th:checked="${x.usingYn}" th:id="'usingYn_' + ${x.id}" value="true"/>
                 <label th:for="'usingYn_' + ${x.id}">사용</label>
             </td>
             <td>
@@ -115,10 +155,8 @@
             </td>
         </tr>
         </tbody>
-        </table>
-
-
-    </div>
+    </table>
+</div>
 
 <form name="updateForm" method="post" action="/admin/brand/update.do">
     <input type="hidden" name="id"/>
@@ -126,6 +164,5 @@
     <input type="hidden" name="sortValue"/>
     <input type="hidden" name="usingYn"/>
 </form>
-
 </body>
 </html>

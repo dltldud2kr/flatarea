@@ -4,22 +4,75 @@
     <meta charset="UTF-8">
     <title>관리자 화면</title>
     <style>
-        .list table{
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .list table th, .list table td {
-            border:solid 1px #000;
-        }
-        p.nothing {
-            text-align: center;
-            padding : 100px;
-        }
-        .inline-div {
-            display: inline-block;
+        .list {
+            margin: 20px auto;
+            width: 80%;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
+        .list form {
+            margin-bottom: 10px;
+        }
+
+        .list table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .list table th, .list table td {
+            border: solid 1px #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .list table th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+        }
+
+        .list table td input[type="text"], .list table td input[type="checkbox"] {
+            width: 100%;
+            padding: 6px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .list table td input[type="checkbox"] {
+            width: auto;
+        }
+
+        .list table td button {
+            padding: 6px 12px;
+            background-color: #000000;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .list table td button:hover {
+            background-color: #0056b3;
+        }
+
+        .list .nothing {
+            text-align: center;
+            padding: 20px;
+            color: #888;
+        }
+
+        .inline-div {
+            display: inline-block;
+            margin-right: 5px;
+        }
     </style>
+
 
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <script>
@@ -57,17 +110,22 @@
     </script>
 </head>
 <body>
-      <h1>카테고리 관리 </h1>
-      <div th:replace="/fragments/layout.html :: fragment-admin-body-menu"></div>
+      <div th:replace="/fragments/head.html :: fragment-admin-body-menu"></div>
 
 
     <div class="list">
 
         <div>
-            <form method="post" action="/admin/category/add.do">
-                <input type="text" name="categoryName" required placeholder="카테고리명 입력"/>
-                <button type="submit">추가</button>
+            <form method="post" action="/admin/category/add.do" style="margin-top: 20px;">
+                <div style="display: flex; align-items: center;">
+                    <input type="text" name="categoryName" required placeholder="카테고리명 입력"
+                           style="padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px; flex: 1; margin-right: 10px;">
+                    <button type="submit" style="padding: 10px 20px; font-size: 16px; background-color: #000000; color: #fff; border: none; border-radius: 4px; cursor: pointer;">
+                        추가
+                    </button>
+                </div>
             </form>
+
 
         </div>
         <table>

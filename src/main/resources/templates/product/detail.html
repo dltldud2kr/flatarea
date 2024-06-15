@@ -4,14 +4,68 @@
     <meta charset="UTF-8">
     <title>제품 상세 정보</title>
     <style>
-
-        .info {
-            width: 1000px;
-            white-space: nowrap; /* 공백문자 한줄처리 */
-            overflow: hidden; /* 넓이 1000px를 넘는 내용은 보이지않게 처리 */
-            text-overflow: ellipsis; /* ...생략부호 처리 */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
         }
 
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-image {
+            width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        .product-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333333;
+            margin-bottom: 10px;
+        }
+
+        .product-description {
+            color: #666666;
+            line-height: 1.6;
+        }
+
+        .product-price {
+            font-size: 20px;
+            color: #007bff;
+            margin-top: 10px;
+        }
+
+        .btn-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-start;
+            gap: 10px;
+        }
+
+        .btn-container button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #000000;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-container button:hover {
+            background-color: #333333;
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"
@@ -19,45 +73,45 @@
 
     <script>
         $(function(){
-
             $('#basketForm').on('submit', function(){
-
                 if (!confirm('장바구니에 추가하시겠습니까?')) {
                     return false;
                 }
             });
         });
     </script>
-
 </head>
 <body>
-<div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
-<div th:replace="/fragments/layout.html :: fragement-category-menu"></div>
-<h1>제품 상세 정보</h1>
-<div>
-    <h2>제품명: <span th:text="${detail.PName}">제품</span></h2>
+<div th:replace="/fragments/head.html :: fragment-body-menu"></div>
+<div th:replace="/fragments/head.html :: fragement-category-menu"></div>
 
-    <!-- 추가된 부분 -->
+<div class="container">
+    <h1 class="product-title" th:text="${detail.PName}">제품명</h1>
+
     <div>
-        <img th:src="@{${detail.imagePath}}" >
+        <img class="product-image" th:src="@{${detail.imagePath}}" alt="Product Image">
     </div>
 
-    <!-- /추가된 부분 -->
-    <div th:utext="${detail.PInfo}">제품 상세 설명</div>
-    <div>
+    <div class="product-description" th:utext="${detail.PInfo}">제품 상세 설명</div>
+
+    <div class="product-price">
         <p>가격: <span th:text="${detail.price}"></span></p>
     </div>
-    <div>
+
+    <div class="btn-container">
+        <form id="basketForm" method="post" action="/basket/add.do">
+            <input type="hidden" name="productId" th:value="${detail.id}"/>
+            <button type="submit">장바구니</button>
+        </form>
+
         <form id="purchaseForm" method="post" action="/purchase">
             <input type="hidden" name="productId" th:value="${detail.id}"/>
             <button type="submit">구매하기</button>
         </form>
 
-        <form id="basketForm" method="post" action="/basket/add.do">
-            <input type="hidden" name="productId" th:value="${detail.id}"/>
-            <button type="submit">장바구니 담기</button>
-        </form>
+
     </div>
 </div>
+
 </body>
 </html>
