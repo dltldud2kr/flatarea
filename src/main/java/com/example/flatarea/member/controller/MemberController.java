@@ -51,6 +51,7 @@ public class MemberController {
     public String memberInfo(Principal principal, Model model){
 
         String userId = principal.getName();
+        System.out.println(userId);
         MemberDto detail = memberService.detail(userId);
 
         model.addAttribute("detail", detail);
