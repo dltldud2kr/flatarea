@@ -37,6 +37,7 @@ public class Member implements MemberCode{
     private String addr;
     private String addrDetail;
 
+    private String platform; // 플랫폼 - email, kakao
 
 
 }

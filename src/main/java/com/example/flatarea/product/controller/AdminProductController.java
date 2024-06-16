@@ -105,8 +105,8 @@ public class AdminProductController {
         if (!file.isEmpty()){
             // 업로드된 파일의 이름
             String originalFilename = file.getOriginalFilename();
-            // 파일이 저장될 경로
-            String localPath = "C:/project/flatarea/src/main/resources/static/image";
+            // 파일이 저장될 경로 -> 상대경로로 내 프로젝트 내부에 저장되도록
+            String localPath = System.getProperty("user.dir") + "/src/main/resources/static/image";
             // 새로운 파일 객체 생성
             File newFile = new File(localPath + File.separator + originalFilename);
 

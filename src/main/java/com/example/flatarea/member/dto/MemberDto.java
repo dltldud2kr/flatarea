@@ -33,6 +33,8 @@ public class MemberDto {
     private String addr;
     private String addrDetail;
 
+    private String platform;
+
     //추가 컬럼
     long totalCount;
     long seq;       //페이징 회원번호 NO 부분 관련 필요 변수

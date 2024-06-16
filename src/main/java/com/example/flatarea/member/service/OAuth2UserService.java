@@ -11,10 +11,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -42,12 +39,15 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
             member = Member.builder()
                     .userId(email)
                     .userName(nickname)
-                    .password(id) // 실제로는 OAuth2 공급자 ID를 암호로 사용하지 않는 것이 좋음
+                    .password(id)
+                    .platform("kakao")
                     .build();
             memberRepository.save(member);
         }
 
-        // 권한 부여 (ROLE_USER 설정)
+        final boolean isAdmin = member.isAdminYn(); // Assuming isAdminYn() returns boolean
+
+        // 권한 부여
         oAuth2User = new OAuth2User() {
             @Override
             public Map<String, Object> getAttributes() {
@@ -56,7 +56,12 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
 
             @Override
             public Collection<? extends GrantedAuthority> getAuthorities() {
-                return Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
+                List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+                grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+                if (isAdmin) {
+                    grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+                }
+                return grantedAuthorities;
             }
 
             @Override
@@ -68,3 +73,4 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
         return oAuth2User;
     }
 }
+

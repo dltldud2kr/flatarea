@@ -47,6 +47,7 @@ public class MemberServiceImpl implements MemberService {
                 .phone(parameter.getPhone())
                 .password(encPassword)
                 .regDt(LocalDateTime.now())
+                .platform("email")
                 .userStatus(MemberCode.MEMBER_STATUS_AVAILABLE)
                 .build();
         memberRepository.save(member);

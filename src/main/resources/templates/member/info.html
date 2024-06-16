@@ -158,10 +158,11 @@
                     <p th:text="${detail.userName}">이름</p>
                 </td>
             </tr>
-            <tr>
+            <tr th:if="${detail.platform == 'email'}">
                 <th>비밀번호 변경</th>
                 <td>
                     <!-- 비밀번호 변경 폼 -->
+
                     <form id="changePasswordForm" method="post">
                         <div class="form-group">
                             <label for="currentPassword">현재 비밀번호</label>

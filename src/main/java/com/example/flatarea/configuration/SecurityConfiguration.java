@@ -76,7 +76,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
          * ROLE_USER 가 admin 페이지로 접근할 때 발생하는 exception 페이지 처리.
          */
         http.exceptionHandling()
-                .accessDeniedPage("/common/denied");    //    /error/denied를 실제 페이지 url 써도 문제 없었음 common은 ??
+                .accessDeniedPage("/error/denied");    //    /error/denied를 실제 페이지 url 써도 문제 없었음 common은 ??
 
 
         super.configure(http);
