@@ -99,6 +99,48 @@
             width: 50px;
         }
     </style>
+    <script>
+        function updateTotalPrice() {
+            const checkboxes = document.querySelectorAll('.checkbox');
+            let totalPrice = 0;
+
+            checkboxes.forEach((checkbox) => {
+                if (checkbox.checked) {
+                    const row = checkbox.closest('tr');
+                    const priceText = row.querySelector('.price').textContent;
+                    const price = parseFloat(priceText.replace(/[^0-9.-]+/g,""));
+                    totalPrice += price;
+                }
+            });
+
+            // Update the total price displayed
+            const totalPriceElement = document.querySelector('.total span');
+            totalPriceElement.textContent = Math.round(totalPrice); // Round to integer
+        }
+
+        function checkboxClicked() {
+            updateTotalPrice();
+        }
+
+        function purchaseSelected() {
+            const checkboxes = document.querySelectorAll('.checkbox');
+            let selectedProductIds = [];
+
+            checkboxes.forEach((checkbox) => {
+                if (checkbox.checked) {
+                    const productId = checkbox.closest('tr').querySelector('.product-id').value;
+                    selectedProductIds.push(productId);
+                }
+            });
+
+            if (selectedProductIds.length > 0) {
+                alert('Selected product IDs: ' + selectedProductIds.join(', '));
+                // Implement purchase logic here with selectedProductIds
+            } else {
+                alert('No products selected.');
+            }
+        }
+    </script>
 </head>
 <body>
 
@@ -117,22 +159,24 @@
             </tr>
             </thead>
             <tbody>
+            <!-- Example list data using Thymeleaf -->
             <tr th:each="x : ${list}">
-                <td class="checkbox-col"><input type="checkbox" class="checkbox" /></td>
+                <td class="checkbox-col"><input type="checkbox" class="checkbox" onchange="checkboxClicked()" /></td>
                 <td th:text="${x.productName}">옷</td>
-                <td th:text="${x.price}">가격</td>
+                <td class="price" th:text="${x.price}">10000</td> <!-- Ensure each product row has the price -->
+                <input type="hidden" class="product-id" th:value="${x.id}"/>
             </tr>
             </tbody>
         </table>
     </div>
 
+
     <div class="total">
-        <span>총 가격: <span th:text="${totalPrice}"></span></span>
+        총 가격: <span>0</span> <!-- Display total price here -->
     </div>
 
     <div class="purchase-buttons">
         <button class="purchase-button" onclick="purchaseSelected()">선택한 제품 구매</button>
-        <button class="purchase-button" onclick="purchaseAll()">전체 구매</button>
     </div>
 
     <div class="pager">
@@ -141,4 +185,6 @@
         <a href="#">3</a>
     </div>
 </div>
-<div th:replace="/fragments/footer.html :: site-footer"></div>
+
+</body>
+</html>
