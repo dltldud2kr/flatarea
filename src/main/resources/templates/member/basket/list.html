@@ -13,7 +13,7 @@
         .container {
             max-width: 800px;
             margin: 0 auto;
-            background-color: #fff;
+            bcustom_orderackground-color: #fff;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -101,43 +101,41 @@
     </style>
     <script>
         function updateTotalPrice() {
-            const checkboxes = document.querySelectorAll('.checkbox');
+            const checkbox = document.querySelector('.checkbox:checked');
             let totalPrice = 0;
 
-            checkboxes.forEach((checkbox) => {
-                if (checkbox.checked) {
-                    const row = checkbox.closest('tr');
-                    const priceText = row.querySelector('.price').textContent;
-                    const price = parseFloat(priceText.replace(/[^0-9.-]+/g,""));
-                    totalPrice += price;
-                }
-            });
+            if (checkbox) {
+                const row = checkbox.closest('tr');
+                const priceText = row.querySelector('.price').textContent;
+                const price = parseFloat(priceText.replace(/[^0-9.-]+/g,""));
+                totalPrice += price;
+            }
 
             // Update the total price displayed
             const totalPriceElement = document.querySelector('.total span');
             totalPriceElement.textContent = Math.round(totalPrice); // Round to integer
         }
 
-        function checkboxClicked() {
+        function checkboxClicked(checkbox) {
+            const checkboxes = document.querySelectorAll('.checkbox');
+            checkboxes.forEach(cb => {
+                if (cb !== checkbox) {
+                    cb.checked = false;
+                }
+            });
             updateTotalPrice();
         }
 
-        function purchaseSelected() {
-            const checkboxes = document.querySelectorAll('.checkbox');
-            let selectedProductIds = [];
-
-            checkboxes.forEach((checkbox) => {
-                if (checkbox.checked) {
-                    const productId = checkbox.closest('tr').querySelector('.product-id').value;
-                    selectedProductIds.push(productId);
-                }
-            });
-
-            if (selectedProductIds.length > 0) {
-                alert('Selected product IDs: ' + selectedProductIds.join(', '));
-                // Implement purchase logic here with selectedProductIds
+        function purchaseSelected(event) {
+            const selectedCheckbox = document.querySelector('.checkbox:checked');
+            if (selectedCheckbox) {
+                const productId = selectedCheckbox.closest('tr').querySelector('.product-id').value;
+                const form = document.getElementById('purchaseForm');
+                form.action = '/purchase/' + productId;
+                form.submit();
             } else {
                 alert('No products selected.');
+                event.preventDefault(); // Prevent the form from submitting
             }
         }
     </script>
@@ -153,7 +151,7 @@
         <table>
             <thead>
             <tr>
-                <th class="checkbox-col"><input type="checkbox" class="select-all" onchange="toggleCheckbox(this)" /></th>
+                <th class="checkbox-col"></th>
                 <th>제품명</th>
                 <th>가격</th>
             </tr>
@@ -161,7 +159,7 @@
             <tbody>
             <!-- Example list data using Thymeleaf -->
             <tr th:each="x : ${list}">
-                <td class="checkbox-col"><input type="checkbox" class="checkbox" onchange="checkboxClicked()" /></td>
+                <td class="checkbox-col"><input type="checkbox" class="checkbox" onchange="checkboxClicked(this)" /></td>
                 <td th:text="${x.productName}">옷</td>
                 <td class="price" th:text="${x.price}">10000</td> <!-- Ensure each product row has the price -->
                 <input type="hidden" class="product-id" th:value="${x.id}"/>
@@ -170,13 +168,14 @@
         </table>
     </div>
 
-
     <div class="total">
         총 가격: <span>0</span>
     </div>
 
     <div class="purchase-buttons">
-        <button class="purchase-button" onclick="purchaseSelected()">선택한 제품 구매</button>
+        <form id="purchaseForm" method="post">
+            <button class="purchase-button" type="button" onclick="purchaseSelected(event)">선택한 제품 구매</button>
+        </form>
     </div>
 
     <div class="pager">
