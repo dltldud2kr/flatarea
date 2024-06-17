@@ -14,29 +14,33 @@
     <!-- jQuery 사용 예시 -->
     <script>
         $(function () {
-            $('#updateForm').on('submit', function () {
-                if (!confirm('회원 정보를 수정하시겠습니까?')) {
-                    return false;
-                }
+            if (document.querySelector("#changePasswordForm")) {
+                $('#updateForm').on('submit', function () {
+                    if (!confirm('회원 정보를 수정하시겠습니까?')) {
+                        return false;
+                    }
 
-                var newPassword = $('input[name=newPassword]').val();
-                var newRePassword = $('input[name=newRePassword]').val();
-                var currentPassword = $('input[name=currentPassword]').val();
+                    var newPassword = $('input[name=newPassword]').val();
+                    var newRePassword = $('input[name=newRePassword]').val();
+                    var currentPassword = $('input[name=currentPassword]').val();
 
-                // 비밀번호가 같은지 확인
-                if (currentPassword === newPassword) {
-                    alert('현재 비밀번호와 새 비밀번호가 동일합니다. 다른 비밀번호를 입력해주세요.');
-                    return false;
-                }
+                    // 비밀번호가 같은지 확인
+                    if (currentPassword === newPassword) {
+                        alert('현재 비밀번호와 새 비밀번호가 동일합니다. 다른 비밀번호를 입력해주세요.');
+                        return false;
+                    }
 
-                // 신규 비밀번호와 확인 비밀번호가 일치하는지 확인
-                if (newPassword !== newRePassword) {
-                    alert('신규 비밀번호와 신규 확인 비밀번호가 일치하지 않습니다.');
-                    return false;
-                }
-
-                // 이 부분에서 실제 수정 처리를 하거나 서브밋을 처리할 수 있음
-            });
+                    // 신규 비밀번호와 확인 비밀번호가 일치하는지 확인
+                    if (newPassword !== newRePassword) {
+                        alert('신규 비밀번호와 신규 확인 비밀번호가 일치하지 않습니다.');
+                        return false;
+                    }
+                });
+            } else {
+                document.querySelector("#updateBtn").addEventListener("click", event => {
+                    alert("수정되었습니다.");
+                });
+            }
         });
     </script>
     <!-- Custom CSS -->
@@ -163,7 +167,7 @@
                 <td>
                     <!-- 비밀번호 변경 폼 -->
 
-                    <form id="changePasswordForm" method="post">
+                    <form id="changePasswordForm" method="post" >
                         <div class="form-group">
                             <label for="currentPassword">현재 비밀번호</label>
                             <input type="password" class="form-control" id="currentPassword" name="currentPassword"
@@ -229,10 +233,8 @@
 <!-- 다음 우편번호 API -->
 <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
     <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer"
-         style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()"
-         alt="닫기 버튼">
+         style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
 </div>
-
 
 <!-- 다음 우편번호 API 스크립트 -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -244,32 +246,44 @@
     }
 
     function execDaumPostcode() {
+        var width = 500; // 우편번호 서비스가 들어갈 element의 width
+        var height = 600; // 우편번호 서비스가 들어갈 element의 height
+        var borderWidth = 5; // 테두리 두께
+
         new daum.Postcode({
             oncomplete: function (data) {
                 var addr = ''; // 주소 변수
                 var extraAddr = ''; // 참고항목 변수
 
-                if (data.userSelectedType === 'R') {
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
                     addr = data.roadAddress;
-                } else {
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
                     addr = data.jibunAddress;
                 }
 
+                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
                 if (data.userSelectedType === 'R') {
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
                     if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
                         extraAddr += data.bname;
                     }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
                     if (data.buildingName !== '' && data.apartment === 'Y') {
                         extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
                     }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
                     if (extraAddr !== '') {
                         extraAddr = ' (' + extraAddr + ')';
                     }
                 }
 
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
                 document.getElementById('zipCode').value = data.zonecode;
                 document.getElementById("addr").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
                 document.getElementById("addrDetail").focus();
+                // iframe을 넣은 element를 안보이게 한다.
                 element_layer.style.display = 'none';
             },
             width: '100%',
@@ -277,7 +291,15 @@
             maxSuggestItems: 5
         }).embed(element_layer);
 
+        // iframe을 넣은 element를 보이게 한다.
         element_layer.style.display = 'block';
+        element_layer.style.width = width + 'px';
+        element_layer.style.height = height + 'px';
+        element_layer.style.border = borderWidth + 'px solid #000';
+        element_layer.style.left = '50%';
+        element_layer.style.top = '50%';
+        element_layer.style.marginLeft = -width / 2 - borderWidth + 'px';
+        element_layer.style.marginTop = -height / 2 - borderWidth + 'px';
     }
 </script>
 </body>
