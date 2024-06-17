@@ -53,7 +53,7 @@ public class MemberController {
         String userId = principal.getName();
         System.out.println(userId);
         MemberDto detail = memberService.detail(userId);
-
+        System.out.println(detail.toString());
         model.addAttribute("detail", detail);
         return "member/info";
     }

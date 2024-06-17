@@ -1,16 +1,20 @@
 package com.example.flatarea.member.service;
 
 import com.example.flatarea.member.entity.Member;
+import com.example.flatarea.member.entity.MemberCode;
+import com.example.flatarea.member.exception.MemberStopUserException;
 import com.example.flatarea.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -32,20 +36,32 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
 
         Optional<Member> memberOptional = memberRepository.findById(email);
         Member member;
-        if (memberOptional.isPresent()) {
+        if (memberOptional.isPresent()) { // 해당 멤버가 가입되어 있을 시
             member = memberOptional.get();
+
+            if (MemberCode.MEMBER_STATUS_STOP.equals(member.getUserStatus())) { // 현재 회원 상태 검사
+                throw new MemberStopUserException("정지된 회원입니다.");
+            }
+
         } else {
+            String encPassword = BCrypt.hashpw(id, BCrypt.gensalt());
+
             // 멤버가 없으면 새로 생성하여 저장
             member = Member.builder()
                     .userId(email)
                     .userName(nickname)
-                    .password(id)
+                    .password(encPassword)
                     .platform("kakao")
+                    .regDt(LocalDateTime.now())
+                    .userStatus(MemberCode.MEMBER_STATUS_AVAILABLE)
                     .build();
             memberRepository.save(member);
         }
 
-        final boolean isAdmin = member.isAdminYn(); // Assuming isAdminYn() returns boolean
+
+
+
+        final boolean isAdmin = member.isAdminYn(); // admin 여부
 
         // 권한 부여
         oAuth2User = new OAuth2User() {
@@ -63,6 +79,8 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
                 }
                 return grantedAuthorities;
             }
+
+
 
             @Override
             public String getName() {

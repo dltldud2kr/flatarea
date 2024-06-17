@@ -56,6 +56,7 @@ public class MemberDto {
                 .zipCode(member.getZipCode())
                 .addr(member.getAddr())
                 .addrDetail(member.getAddrDetail())
+                .platform(member.getPlatform())
                 .build();
     }
 
