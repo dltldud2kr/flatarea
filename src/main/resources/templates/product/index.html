@@ -60,6 +60,14 @@
             font-size: 14px;
             line-height: 1.4;
         }
+
+        .product-image {
+            width: 100%; /* 이미지가 부모 요소의 너비에 맞게 조정됩니다 */
+            height: auto; /* 높이는 비율에 맞게 자동으로 조정됩니다 */
+            max-width: 250px; /* 원하는 최대 너비를 설정합니다 */
+            max-height: 250px; /* 원하는 최대 높이를 설정합니다 */
+            object-fit: cover; /* 이미지가 요소를 꽉 채우도록 조정됩니다 */
+        }
     </style>
 </head>
 <body>
@@ -71,20 +79,21 @@
     <ul class="product-grid">
         <li th:each="product : ${list}" class="product-item">
             <div>
+                <a>
+                    <img class="product-image" th:src="@{${product.imagePath}}" alt="Product Image">
+                </a>
                 <a th:href="'/product/' + ${product.id}" class="product-title">
                     <h4 th:text="${product.PName}">제품명</h4>
                 </a>
                 <div>
-                    <img class="product-image" th:src="@{${product.imagePath}}" alt="Product Image">
-                </div>
-                <div>
-                    <strong class="product-price"><p th:text="${product.price}">가격</p></strong>
+                    <strong class="product-price"><p th:text="'₩' + ${product.price} + '원'">가격</p></strong>
                     <p class="product-summary" th:text="${product.summary}">제품 요약문구</p>
                 </div>
             </div>
         </li>
     </ul>
 </div>
+<div th:replace="/fragments/footer.html :: site-footer"></div>
 
 </body>
 </html>

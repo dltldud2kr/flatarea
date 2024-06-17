@@ -43,6 +43,7 @@
             }
         });
     </script>
+
     <!-- Custom CSS -->
     <style>
         .container {
@@ -230,6 +231,9 @@
     </form>
 </div>
 
+<!-- 푸터 추가 -->
+<footer th:include="/fragments/footer.html :: site-footer"></footer>
+
 <!-- 다음 우편번호 API -->
 <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
     <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer"
@@ -302,5 +306,6 @@
         element_layer.style.marginTop = -height / 2 - borderWidth + 'px';
     }
 </script>
+
 </body>
 </html>

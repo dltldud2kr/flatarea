@@ -8,6 +8,12 @@
 <body>
 <div th:fragment="fragment-body-menu">
     <style>
+        body{
+            background-image: url('/image/back.png'); /* 배경 이미지 경로 설정 */
+            background-size: cover; /* 배경 이미지 크기를 요소 크기에 맞게 조정 */
+            background-repeat: no-repeat; /* 배경 이미지 반복 안 함 */
+            background-position: center; /* 배경 이미지 중앙 정렬 */
+        }
         .title, .title a {
             text-align: center;
             text-decoration: none;
@@ -33,10 +39,21 @@
             text-decoration: underline; /* 링크에 마우스를 올렸을 때 밑줄 표시 */
             color: #ff0000; /* 링크 텍스트 색상을 빨간색(#ff0000)으로 변경 */
         }
+
+        .title img {
+            width: auto; /* 원하는 너비 설정 */
+            height: 90px; /* 높이는 비율에 맞게 자동으로 조정 */
+
+        }
     </style>
     <h1>
-        <div class="title"><a href="/">FlatArea</a></div>
+        <div class="title">
+            <a href="/">
+                <img src="/image/logo.png" alt="FlatArea Logo" class="logo-image">
+            </a>
+        </div>
     </h1>
+
 
     <div class="layout">
         <a href="/member/info">회원 정보</a>
@@ -154,6 +171,7 @@
             text-decoration: none;
             color: #000000;
         }
+
         .admin-menu {
             display: grid;
             grid-template-columns: repeat(5, auto); /* 5개의 열을 자동으로 생성 */
