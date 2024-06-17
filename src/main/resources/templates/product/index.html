@@ -75,6 +75,9 @@
                     <h4 th:text="${product.PName}">제품명</h4>
                 </a>
                 <div>
+                    <img class="product-image" th:src="@{${product.imagePath}}" alt="Product Image">
+                </div>
+                <div>
                     <strong class="product-price"><p th:text="${product.price}">가격</p></strong>
                     <p class="product-summary" th:text="${product.summary}">제품 요약문구</p>
                 </div>
