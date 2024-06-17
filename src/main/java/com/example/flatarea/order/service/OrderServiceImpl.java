@@ -47,24 +47,22 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public boolean add(OrderInput param) {
 
-        Basket basket = basketRepository.findById(param.getProductId())
-                .orElseThrow(()-> new RuntimeException());
+        Product product = productRepository.findById(param.getProductId())
+                .orElseThrow(RuntimeException::new);
 
         Order order = Order.builder()
                 .userId(param.getUserId())
                 .regDt(LocalDateTime.now())
                 .phone(param.getPhone())
                 .recipient(param.getRecipientName())
-                .payPrice(basket.getPrice())
-                .orderId(basket.getId())
+                .payPrice(product.getPrice())
+                .orderId(product.getId())
                 .orderRequest(param.getOrderRequest())
                 .address(param.getAddr() + " " + param.getAddrDetail())
+                .status("주문요청")
                 .build();
 
         orderRepository.save(order);
-
-        orderRepository.save(order);
-
         return true;
     }
 }
