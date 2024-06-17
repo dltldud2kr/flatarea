@@ -115,7 +115,7 @@
 
             // Update the total price displayed
             const totalPriceElement = document.querySelector('.total span');
-            totalPriceElement.textContent = totalPrice.toFixed(2);
+            totalPriceElement.textContent = Math.round(totalPrice); // Round to integer
         }
 
         function checkboxClicked() {
@@ -171,7 +171,7 @@
     </div>
 
     <div class="total">
-        총 가격: <span>0.00</span> <!-- Display total price here -->
+        총 가격: <span>0</span> <!-- Display total price here -->
     </div>
 
     <div class="purchase-buttons">
