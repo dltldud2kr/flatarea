@@ -14,51 +14,67 @@
 
 <h3>배송 정보</h3>
 <div>
-    <form id="purchaseForm" method="post" >
-    <table>
-        <tbody>
-        <tr>
-            <th>
-                받으시는 분
-            </th>
-            <td>
-                <input type="text" name="recipientName"/>
-            </td>
-        </tr>
-        <tr>
-            <th>휴대전화</th>
-            <td>
-                <input type="text" name="phone"/>
-            </td>
-        </tr>
-        <tr>
-            <th>주소</th>
-            <td>
-                <div>
-                <input type="text" id="zipCode" name="zipCode"  />
-                <button type="button">우편번호</button>
-                </div>
-                <div>
-                    <input type="text" id="addr" name="addr"  placeholder="주소 입력"/>
-                    <input type="text" id="addrDetail" name="addrDetail"  placeholder="상세주소"/>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <th>배송시 요청사항</th>
-            <td>
-                <input type="text" name="orderRequest"/>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <form id="purchaseForm" method="post">
+        <input type="hidden" id="productId" name="productId" th:value="${productId}"/>
+        <table>
+            <tbody>
+            <tr>
+                <th>받으시는 분</th>
+                <td>
+                    <input type="text" name="recipientName"/>
+                </td>
+            </tr>
+            <tr>
+                <th>휴대전화</th>
+                <td>
+                    <input type="text" name="phone"/>
+                </td>
+            </tr>
+            <tr>
+                <th>주소</th>
+                <td>
+                    <div>
+                        <input type="text" id="zipCode" name="zipCode"/>
+                        <button type="button">우편번호</button>
+                    </div>
+                    <div>
+                        <input type="text" id="addr" name="addr" placeholder="주소 입력"/>
+                        <input type="text" id="addrDetail" name="addrDetail" placeholder="상세주소"/>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>배송시 요청사항</th>
+                <td>
+                    <input type="text" name="orderRequest"/>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </form>
 
     <div class="buttons">
-        <button type="submit">주문하기</button>
-
+        <button type="button" onclick="submitOrder()">주문하기</button>
     </div>
 </div>
+
+<script>
+    function submitOrder() {
+        const form = document.getElementById('purchaseForm');
+        const formData = new FormData(form);
+
+        // FormData 객체를 직렬화하지 않고 그대로 전송
+        axios.post('/purchase/add.do', formData)
+            .then(response => {
+                console.log(response.data);
+                alert('주문이 성공적으로 완료되었습니다.');
+            })
+            .catch(error => {
+                console.error('There was an error!', error);
+                alert('주문에 실패했습니다.');
+            });
+    }
+</script>
 
 </body>
 </html>

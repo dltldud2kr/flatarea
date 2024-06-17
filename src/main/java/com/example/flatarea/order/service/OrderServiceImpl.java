@@ -1,6 +1,8 @@
 package com.example.flatarea.order.service;
 
 import com.example.flatarea.member.dto.MemberDto;
+import com.example.flatarea.member.repository.MemberRepository;
+import com.example.flatarea.order.entity.Order;
 import com.example.flatarea.order.model.OrderInput;
 import com.example.flatarea.order.repository.OrderRepository;
 import com.example.flatarea.product.entity.Product;
@@ -9,7 +11,6 @@ import com.example.flatarea.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.Order;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -19,6 +20,7 @@ public class OrderServiceImpl implements OrderService {
 
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
+    private final MemberRepository memberRepository;
 
 
     @Override
@@ -40,7 +42,19 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public boolean add(OrderInput orderInput) {
-        return false;
+    public boolean add(OrderInput param) {
+
+        Order order = Order.builder()
+                .userId(param.getUserId())
+                .regDt(LocalDateTime.now())
+                .phone(param.getPhone())
+                .recipient(param.getRecipientName())
+                .orderRequest(param.getOrderRequest())
+                .address(param.getAddr() + " " + param.getAddrDetail())
+                .build();
+
+        orderRepository.save(order);
+
+        return true;
     }
 }

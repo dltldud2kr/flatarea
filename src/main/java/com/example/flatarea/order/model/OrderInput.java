@@ -12,6 +12,7 @@ public class OrderInput {
     String addr;
     String addrDetail;
     String orderRequest;
+    String userId;
 
 
 

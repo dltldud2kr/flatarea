@@ -104,8 +104,8 @@
             <button type="submit">장바구니</button>
         </form>
 
-        <form id="purchaseForm" method="post" action="/purchase">
-            <input type="hidden" name="productId" th:value="${detail.id}"/>
+        <form id="purchaseForm" method="post" th:action="'/purchase/' + ${detail.id}">
+<!--            <input type="hidden" name="productId" th:value="${detail.id}"/>-->
             <button type="submit">구매하기</button>
         </form>
 

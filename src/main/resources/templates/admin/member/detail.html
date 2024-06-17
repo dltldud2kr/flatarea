@@ -4,92 +4,162 @@
     <meta charset="UTF-8">
     <title>관리자 화면</title>
     <style>
-        .detail table{
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .detail table th, .detail table td {
-            border:solid 1px #000;
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .form-inline {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-inline select, .form-inline input[type="text"] {
+            margin-right: 10px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            flex: 1;
+        }
+
+        .form-inline button {
+            padding: 5px 10px;
+            background-color: #000000;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .form-inline button:hover {
+            background-color: #0056b3;
+        }
+
+        .form-inline p {
+            margin: 0 10px 0 0;
+        }
+
+        .form-container {
+            margin-top: 20px;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #000000;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
-      <h1>회원 상세 정보 </h1>
-      <div th:replace="/fragments/head.html :: fragment-admin-body-menu"></div>
+
+<div th:replace="/fragments/head.html :: fragment-admin-body-menu"></div>
+
+<div class="container">
 
     <div class="detail">
-
         <table>
             <tbody>
-                <tr>
-                    <th>아이디</th>
-                    <td>
-                        <p th:text="${member.userId}"></p>
-                    </td>
-                </tr>
-                <tr>
-                    <th>이름</th>
-                    <td>
-                        <p th:text="${member.userName}"></p>
-                    </td>
-                </tr>
-                <tr>
-                    <th>연락처</th>
-                    <td>
-                        <p th:text="${member.phone}"></p>
-                    </td>
-                </tr>
-                <tr>
-                    <th>가입일</th>
-                    <td>
-                        <p th:text="${member.regDt}"></p>
-                    </td>
-                </tr>
-                <tr>
-                    <th>관리자 권한</th>
-                    <td>
-                        <p th:text="${member.adminYn}"></p>
-                    </td>
-                </tr>
-                <tr>
-                    <th>계정 상태</th>
-                    <td>
-                        <p>
-                            현재상태: <span th:text="${member.userStatus}"></span>
-                        </p>
-                        <div>
-                            <form method="post" action="/admin/member/status.do">
-                                <input th:value="${member.userId}" type="hidden" name="userId" />
-                                <select name="userStatus">
-                                    <option value="AVAILABLE">이용가능상태</option>
-                                    <option value="STOP">정지상태</option>
-                                </select>
-                                <button type="submit">상태 변경</button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
-
-                <tr>
-                    <th>비밀번호 초기화</th>
-                    <td>
-                        <div>
-                            <form method="post" action="/admin/member/password.do">
-                                <input th:value="${member.userId}" type="hidden" name="userId" />
-                                <input type="text" name="password" />
-                                <button type="submit">비밀번호 초기화</button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
+            <tr>
+                <th>아이디</th>
+                <td>
+                    <p th:text="${member.userId}"></p>
+                </td>
+            </tr>
+            <tr>
+                <th>이름</th>
+                <td>
+                    <p th:text="${member.userName}"></p>
+                </td>
+            </tr>
+            <tr>
+                <th>연락처</th>
+                <td>
+                    <p th:text="${member.phone}"></p>
+                </td>
+            </tr>
+            <tr>
+                <th>가입일</th>
+                <td>
+                    <p th:text="${member.regDt}"></p>
+                </td>
+            </tr>
+            <tr>
+                <th>관리자 권한</th>
+                <td>
+                    <p th:text="${member.adminYn}"></p>
+                </td>
+            </tr>
+            <tr>
+                <th>계정 상태</th>
+                <td>
+                    <p>
+                        현재상태: <span th:text="${member.userStatus}"></span>
+                    </p>
+                    <div class="form-container">
+                        <form class="form-inline" method="post" action="/admin/member/status.do">
+                            <input th:value="${member.userId}" type="hidden" name="userId" />
+                            <select name="userStatus">
+                                <option value="AVAILABLE">이용가능상태</option>
+                                <option value="STOP">정지상태</option>
+                            </select>
+                            <button type="submit">상태 변경</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>비밀번호 초기화</th>
+                <td>
+                    <div class="form-container">
+                        <form class="form-inline" method="post" action="/admin/member/password.do">
+                            <input th:value="${member.userId}" type="hidden" name="userId" />
+                            <input type="text" name="password" placeholder="새 비밀번호" />
+                            <button type="submit">비밀번호 초기화</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
             </tbody>
         </table>
     </div>
 
-    <div>
-        <a href="list.do">목록</a>
-    </div>
+    <a href="list.do" class="back-link">목록</a>
+</div>
 
 </body>
 </html>

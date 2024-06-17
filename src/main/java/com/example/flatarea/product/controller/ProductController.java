@@ -24,7 +24,7 @@ public class ProductController {
 
 
 
-    @GetMapping(value = {"/", "/product", "/product/**","/purchase"})
+    @GetMapping(value = {"/", "/product", "/product/**"})
 
     public String list(Model model, ProductParam parameter) {
 
