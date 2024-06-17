@@ -100,37 +100,45 @@
         }
     </style>
     <script>
-        function toggleCheckbox(selectAll) {
+        function updateTotalPrice() {
             const checkboxes = document.querySelectorAll('.checkbox');
-            checkboxes.forEach(checkbox => {
-                checkbox.checked = selectAll.checked;
+            let totalPrice = 0;
+
+            checkboxes.forEach((checkbox) => {
+                if (checkbox.checked) {
+                    const row = checkbox.closest('tr');
+                    const priceText = row.querySelector('.price').textContent;
+                    const price = parseFloat(priceText.replace(/[^0-9.-]+/g,""));
+                    totalPrice += price;
+                }
             });
+
+            // Update the total price displayed
+            const totalPriceElement = document.querySelector('.total span');
+            totalPriceElement.textContent = totalPrice.toFixed(2);
+        }
+
+        function checkboxClicked() {
+            updateTotalPrice();
         }
 
         function purchaseSelected() {
             const checkboxes = document.querySelectorAll('.checkbox');
-            let selectedProductId = null;
-            checkboxes.forEach((checkbox, index) => {
+            let selectedProductIds = [];
+
+            checkboxes.forEach((checkbox) => {
                 if (checkbox.checked) {
                     const productId = checkbox.closest('tr').querySelector('.product-id').value;
-                    selectedProductId = productId;
+                    selectedProductIds.push(productId);
                 }
             });
 
-            if (selectedProductId) {
-                createAndSubmitForm(selectedProductId);
+            if (selectedProductIds.length > 0) {
+                alert('Selected product IDs: ' + selectedProductIds.join(', '));
+                // Implement purchase logic here with selectedProductIds
             } else {
                 alert('No products selected.');
             }
-        }
-
-        function createAndSubmitForm(productId) {
-            const form = document.createElement('form');
-            form.method = 'post';
-            form.action = `/purchase/${productId}`;
-
-            document.body.appendChild(form);
-            form.submit();
         }
     </script>
 </head>
@@ -151,10 +159,11 @@
             </tr>
             </thead>
             <tbody>
+            <!-- Example list data using Thymeleaf -->
             <tr th:each="x : ${list}">
-                <td class="checkbox-col"><input type="checkbox" class="checkbox" /></td>
+                <td class="checkbox-col"><input type="checkbox" class="checkbox" onchange="checkboxClicked()" /></td>
                 <td th:text="${x.productName}">옷</td>
-                <td th:text="${x.price}">가격</td>
+                <td class="price" th:text="${x.price}">10000</td> <!-- Ensure each product row has the price -->
                 <input type="hidden" class="product-id" th:value="${x.id}"/>
             </tr>
             </tbody>
@@ -162,12 +171,11 @@
     </div>
 
     <div class="total">
-        <span>총 가격: <span th:text="${totalPrice}"></span></span>
+        총 가격: <span>0.00</span> <!-- Display total price here -->
     </div>
 
     <div class="purchase-buttons">
         <button class="purchase-button" onclick="purchaseSelected()">선택한 제품 구매</button>
-        <button class="purchase-button" onclick="purchaseAll()">전체 구매</button>
     </div>
 
     <div class="pager">
