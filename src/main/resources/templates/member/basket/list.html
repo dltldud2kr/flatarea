@@ -99,6 +99,87 @@
             width: 50px;
         }
     </style>
+    <script>
+        function updateTotalPrice() {
+            const checkboxes = document.querySelectorAll('.checkbox');
+            let totalPrice = 0;
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    const priceElement = checkbox.closest('tr').querySelector('.price'); // 가격 요소 선택
+                    const price = parseFloat(priceElement.textContent); // 텍스트에서 숫자로 변환
+                    totalPrice += price;
+                }
+            });
+            document.querySelector('.total span').textContent = totalPrice.toFixed(2); // 총 가격 업데이트
+        }
+
+        function toggleCheckbox(selectAll) {
+            const checkboxes = document.querySelectorAll('.checkbox');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = selectAll.checked;
+            });
+            updateTotalPrice(); // 전체 선택/해제 시 총 가격 업데이트
+        }
+
+        function purchaseSelected() {
+            const checkboxes = document.querySelectorAll('.checkbox');
+            let selectedProductId = null;
+            checkboxes.forEach((checkbox, index) => {
+                if (checkbox.checked) {
+                    const productId = checkbox.closest('tr').querySelector('.product-id').value;
+                    selectedProductId = productId;
+                }
+            });
+
+            if (selectedProductId) {
+                createAndSubmitForm(selectedProductId);
+            } else {
+                alert('No products selected.');
+            }
+        }
+
+        function createAndSubmitForm(productId) {
+            const form = document.createElement('form');
+            form.method = 'post';
+            form.action = `/purchase/${productId}`;
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+
+        function purchaseAll() {
+            const checkboxes = document.querySelectorAll('.checkbox:checked');
+            if (checkboxes.length === 0) {
+                alert('구매할 제품을 선택해 주세요.');
+                return;
+            }
+
+            const selectedProducts = [];
+            checkboxes.forEach(checkbox => {
+                const productId = checkbox.closest('tr').querySelector('.product-id').value;
+                selectedProducts.push(productId);
+            });
+
+            createAndSubmitForm(selectedProducts);
+        }
+
+        function createAndSubmitForm(productIds) {
+            const form = document.createElement('form');
+            form.method = 'post';
+            form.action = '/purchase/all';
+
+            productIds.forEach(productId => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'productIds';
+                input.value = productId;
+                form.appendChild(input);
+            });
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
 </head>
 <body>
 
@@ -118,16 +199,17 @@
             </thead>
             <tbody>
             <tr th:each="x : ${list}">
-                <td class="checkbox-col"><input type="checkbox" class="checkbox" /></td>
+                <td class="checkbox-col"><input type="checkbox" class="checkbox" onclick="updateTotalPrice()" /></td>
                 <td th:text="${x.productName}">옷</td>
-                <td th:text="${x.price}">가격</td>
+                <td class="price" th:text="${x.price}">10000</td>
+                <td style="display: none;"><input type="hidden" class="product-id" th:value="${x.id}"/></td>
             </tr>
             </tbody>
         </table>
     </div>
 
     <div class="total">
-        <span>총 가격: <span th:text="${totalPrice}"></span></span>
+        <a>총 가격: <span>0.00</span></a>
     </div>
 
     <div class="purchase-buttons">
@@ -141,3 +223,6 @@
         <a href="#">3</a>
     </div>
 </div>
+
+</body>
+</html>

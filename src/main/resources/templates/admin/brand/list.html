@@ -2,167 +2,196 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>관리자 화면</title>
-    <style>
+    <title>Title</title>
 
-        .list table {
-            width: 100%;
-            border-collapse: collapse;
-            border: 2px solid #ccc;
-            margin-top: 20px;
-        }
-        .list table th, .list table td {
-            border: solid 1px #ccc;
-            padding: 8px;
+</head>
+<body>
+<div th:fragment="fragment-body-menu">
+    <style>
+        .title, .title a {
             text-align: center;
+            text-decoration: none;
+            color: #000000;
         }
-        .list table th {
-            background-color: #f2f2f2;
+
+        .layout a {
+            text-decoration: none; /* 밑줄 제거 */
+            color: #000000; /* 텍스트 색상을 검은색으로 설정 */
+            margin-left: 10px; /* 링크 사이 간격 조정 */
+            font-weight: bold; /* 텍스트 굵게 설정 */
         }
-        p.nothing {
-            text-align: center;
-            padding: 100px;
-            font-size: 18px;
-            color: #888;
-        }
-        .inline-div {
-            display: inline-block;
-            margin-right: 5px;
-        }
-        form {
-            margin-top: 10px;
-        }
-        form input[type="text"], form button {
+
+        .layout {
+            display: grid;
+            grid-template-columns: repeat(5, auto); /* 5개의 열을 자동으로 생성 */
+            justify-content: flex-end; /* 링크를 오른쪽 정렬 */
+            gap: 10px; /* 링크 사이의 간격 */
             padding: 10px;
-            font-size: 16px;
+        }
+
+        .layout a:hover {
+            text-decoration: underline; /* 링크에 마우스를 올렸을 때 밑줄 표시 */
+            color: #ff0000; /* 링크 텍스트 색상을 빨간색(#ff0000)으로 변경 */
+        }
+    </style>
+    <h1>
+        <div class="title"><a href="/">FlatArea</a></div>
+    </h1>
+
+    <div class="layout">
+        <a href="/member/info">회원 정보</a>
+        <a href="/member/basket/list.do">장바구니</a>
+        <a href="/purchaseList">구매 목록</a>
+        <a href="/member/login">로그인</a>
+        <a href="/member/login">로그아웃</a>
+    </div>
+</div>
+
+<div th:fragment="fragement-category-menu">
+    <style>
+        .menu {
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: #000000;
+            padding: 8px 12px;
+            margin: 0 1px; /* 좌우 여백을 줄이고, 패딩을 조정하여 요소들 간의 간격을 적절히 조절 */
+            border-radius: 4px;
+        }
+
+        .menu a:hover {
+            background-color: #f0f0f0;
+        }
+
+        .menu select {
+            padding: 5px;
             border: 1px solid #ccc;
             border-radius: 4px;
-        }
-        form button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-            padding: 10px; /* 수정 */
-        }
-        form button:hover {
-            background-color: #0056b3;
-        }
-        .update-button {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 10px; /* 수정 */
-            cursor: pointer;
-            border-radius: 4px;
-        }
-        .update-button:hover {
-            background-color: #218838;
-        }
-        form[name=deleteForm] button {
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            padding: 8px; /* 수정 */
-            cursor: pointer;
-            border-radius: 4px;
-        }
-        form[name=deleteForm] button:hover {
-            background-color: #c82333;
+            margin-left: 10px;
         }
     </style>
 
+    <hr/>
+    <div class="menu">
+        <a href="/product">전체 (<span th:text="${productTotalCount}"></span>)</a>
 
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-    <script>
-        $(document).ready(function() {
-            $('form[name=deleteForm]').on('submit', function() {
-                if (!confirm('브랜드를 삭제하시겠습니까?')) {
-                    return false;
-                }
-            });
+        <th:block th:each="y : ${brandList}">
+            |
+            <a th:href="'/product?brandId=' + ${y.id}">
+                <span th:text="${y.brandName}"></span> (<span th:text="${y.productCount}"></span>)
+            </a>
+        </th:block>
 
-            $('button.update-button').on('click', function() {
-                if (!confirm('브랜드를 수정하시겠습니까?')) {
-                    return false;
-                }
-                var $this = $(this);
-                var $tr = $this.closest('tr');
-                var id = $tr.find('input[name=id]').val();
-                var brandName = $tr.find('input[name=brandName]').val();
-                var sortValue = $tr.find('input[name=sortValue]').val();
-                var usingYn = $tr.find('input[type=checkbox]').prop('checked');
-                var $updateForm = $('form[name=updateForm]');
-                $updateForm.find('input[name=id]').val(id);
-                $updateForm.find('input[name=brandName]').val(brandName);
-                $updateForm.find('input[name=sortValue]').val(sortValue);
-                $updateForm.find('input[name=usingYn]').val(usingYn);
-                $updateForm.submit();
-            });
-        });
-    </script>
-</head>
-<body>
-<div th:replace="/fragments/head.html :: fragment-admin-body-menu"></div>
-
-<div class="list">
-    <form method="post" action="/admin/brand/add.do">
-        <input type="text" name="brandName" required placeholder="브랜드명 입력"/>
-        <button type="submit">추가</button>
-    </form>
-
-    <table>
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>브랜드명</th>
-            <th>순서</th>
-            <th>사용여부</th>
-            <th>비고</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="x : ${list}">
-            <td>
-                <input type="hidden" name="id" th:value="${x.id}"/>
-                <p th:text="${x.id}">1</p>
-            </td>
-            <td>
-                <input type="text" name="brandName" th:value="${x.brandName}"/>
-            </td>
-            <td>
-                <input type="text" name="sortValue" th:value="${x.sortValue}"/>
-            </td>
-            <td>
-                <input type="checkbox" name="usingYn" th:checked="${x.usingYn}" th:id="'usingYn_' + ${x.id}" value="true"/>
-                <label th:for="'usingYn_' + ${x.id}">사용</label>
-            </td>
-            <td>
-                <div class="inline-div">
-                    <button class="update-button" type="button">수정</button>
-                </div>
-                <div class="inline-div">
-                    <form name="deleteForm" method="post" action="/admin/brand/delete.do">
-                        <input type="hidden" name="id" th:value="${x.id}"/>
-                        <button type="submit">삭제</button>
-                    </form>
-                </div>
-            </td>
-        </tr>
-        <tr th:if="${#lists.size(list) < 1}">
-            <td colspan="5">
-                <p class="nothing">내용이 없습니다.</p>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+        <select onchange="if(this.value) location.href=(this.value);">
+            <option>의류</option>
+            <option th:each="x : ${categoryList}" th:value="'/product?categoryId=' + ${x.id}"
+                    th:text="${x.categoryName}"></option>
+        </select>
+    </div>
+    <hr/>
 </div>
 
-<form name="updateForm" method="post" action="/admin/brand/update.do">
-    <input type="hidden" name="id"/>
-    <input type="hidden" name="brandName"/>
-    <input type="hidden" name="sortValue"/>
-    <input type="hidden" name="usingYn"/>
-</form>
+<style>
+    /* 왼쪽 사이드 바 스타일 */
+    .sidebar {
+        position: fixed; /* 고정 위치 */
+        top: 0;
+        left: 0;
+        width: 200px;
+        background-color: #f0f0f0;
+        padding: 10px;
+        height: 100%; /* 화면 전체 높이로 설정 */
+        border-right: 1px solid #ddd;
+    }
+
+    .sidebar a {
+        display: block;
+        text-decoration: none;
+        color: #000000;
+        margin-bottom: 10px;
+        padding: 8px;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+    }
+
+    .sidebar a:hover {
+        background-color: #ddd;
+    }
+
+    /* 의류 카테고리 스타일 */
+    .category-dropdown {
+        margin-top: 20px;
+    }
+</style>
+
+<div class="sidebar">
+    <a href="/product">전체 (<span th:text="${productTotalCount}"></span>)</a>
+
+    <th:block th:each="y : ${brandList}">
+        <a th:href="'/product?brandId=' + ${y.id}">
+            <span th:text="${y.brandName}"></span> (<span th:text="${y.productCount}"></span>)
+        </a>
+    </th:block>
+
+    <!-- 왼쪽 사이드 바에 의류 카테고리 드롭다운 배치 -->
+    <div class="category-dropdown">
+        <select onchange="if(this.value) location.href=(this.value);">
+            <option>의류</option>
+            <option th:each="x : ${categoryList}" th:value="'/product?categoryId=' + ${x.id}"
+                    th:text="${x.categoryName}"></option>
+        </select>
+    </div>
+</div>
+
+<div th:fragment="fragment-admin-body-menu">
+    <style>
+        .title, .title a {
+            text-align: center;
+            text-decoration: none;
+            color: #000000;
+        }
+        .admin-menu {
+            display: grid;
+            grid-template-columns: repeat(5, auto); /* 5개의 열을 자동으로 생성 */
+            justify-content: flex-end; /* 링크를 오른쪽 정렬 */
+            gap: 10px; /* 링크 사이의 간격 */
+            padding: 10px;
+        }
+
+        .admin-menu a {
+            text-decoration: none; /* 밑줄 제거 */
+            color: #000000; /* 텍스트 색상을 검은색으로 설정 */
+            margin-left: 10px; /* 링크 사이 간격 조정 */
+            font-weight: bold; /* 텍스트 굵게 설정 */
+        }
+
+        .admin-menu a:hover {
+            background-color: #f0f0f0;
+        }
+
+        .admin-menu hr {
+            border: none;
+            border-top: 1px solid #ccc;
+            margin: 20px 0;
+        }
+    </style>
+    <h1>
+        <div class="title"><a href="/admin/main.do">FlatArea 관리자</a></div>
+    </h1>
+    <div class="admin-menu">
+        <a href="/admin/member/list.do">회원 목록</a>
+        <a href="/admin/category/list.do">카테고리 관리</a>
+        <a href="/admin/brand/list.do">브랜드 관리</a>
+        <a href="/admin/product/list.do">제품 관리</a>
+        <a href="/member/logout">로그아웃</a>
+    </div>
+    <hr/>
+</div>
+
+
 </body>
 </html>

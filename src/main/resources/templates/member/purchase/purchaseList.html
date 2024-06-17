@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>구매목록</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+        }
+
+        .total {
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        .total span {
+            font-weight: bold;
+        }
+
+        .purchase-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .purchase-button {
+            padding: 10px 20px;
+            background-color: #000000;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .purchase-button:hover {
+            background-color: #0056b3;
+        }
+
+        .pager {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .pager a {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #000000;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .pager a:hover {
+            background-color: #0056b3;
+        }
+
+        .pager .on {
+            font-weight: bold;
+            color: red;
+        }
+
+        .checkbox-col {
+            width: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<div th:replace="/fragments/head.html :: fragment-body-menu"></div>
+
+<div class="container">
+    <h3>구매목록</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>주문 번호</th>
+            <th>가격</th>
+            <th>받으시는 분</th>
+            <th>휴대전화</th>
+            <th>주소</th>
+            <th>배송 요청사항</th>
+            <th>상태</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- 주문 목록을 동적으로 출력 -->
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.orderId}">주문번호</td>
+            <td th:text="${order.payPrice}">결제금액</td>
+            <td th:text="${order.recipient}">받으시는 분</td>
+            <td th:text="${order.phone}">휴대전화</td>
+            <td th:text="${order.address}">주소</td>
+            <td th:text="${order.orderRequest}">배송 요청사항</td>
+            <td>결제완료</td> <!-- 고정된 텍스트 예시 -->
+        </tr>
+        </tbody>
+    </table>
+
+
+    <!-- 페이징 예시 -->
+    <div class="pager">
+        <a href="#" class="on">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+    </div>
+</div>
+
+</body>
+</html>
