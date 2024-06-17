@@ -1,6 +1,8 @@
 package com.example.flatarea.order.service;
 
 import com.example.flatarea.member.dto.MemberDto;
+import com.example.flatarea.member.entity.Basket;
+import com.example.flatarea.member.repository.BasketRepository;
 import com.example.flatarea.member.repository.MemberRepository;
 import com.example.flatarea.order.entity.Order;
 import com.example.flatarea.order.model.OrderInput;
@@ -21,6 +23,7 @@ public class OrderServiceImpl implements OrderService {
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
     private final MemberRepository memberRepository;
+    private final BasketRepository basketRepository;
 
 
     @Override
@@ -44,14 +47,21 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public boolean add(OrderInput param) {
 
+        Basket basket = basketRepository.findById(param.getProductId())
+                .orElseThrow(()-> new RuntimeException());
+
         Order order = Order.builder()
                 .userId(param.getUserId())
                 .regDt(LocalDateTime.now())
                 .phone(param.getPhone())
                 .recipient(param.getRecipientName())
+                .payPrice(basket.getPrice())
+                .orderId(basket.getId())
                 .orderRequest(param.getOrderRequest())
                 .address(param.getAddr() + " " + param.getAddrDetail())
                 .build();
+
+        orderRepository.save(order);
 
         orderRepository.save(order);
 

@@ -1,5 +1,6 @@
 package com.example.flatarea.product.service;
 
+import com.example.flatarea.product.entity.Product;
 import com.example.flatarea.product.model.ProductInput;
 import com.example.flatarea.product.model.ProductParam;
 import com.example.flatarea.product.dto.ProductDto;
@@ -43,4 +44,5 @@ public interface ProductService {
      * 프론트 제품 상제정보
      */
     ProductDto frontDetail(long id);
+
 }

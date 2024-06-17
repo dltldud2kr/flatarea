@@ -10,16 +10,14 @@ import com.example.flatarea.order.model.OrderInput;
 import com.example.flatarea.order.model.OrderParam;
 import com.example.flatarea.order.service.OrderService;
 import com.example.flatarea.product.dto.ProductDto;
+import com.example.flatarea.product.entity.Product;
 import com.example.flatarea.product.model.ProductInput;
 import com.example.flatarea.product.repository.ProductRepository;
 import com.example.flatarea.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -57,8 +55,9 @@ public class OrderController {
         model.addAttribute("brandList", brandList);
         model.addAttribute("productTotalCount", productTotalCount);
 
-        return "product/purchase";
+            return "product/purchase";
     }
+
 
 
 //    @GetMapping("/purchase")
