@@ -1,36 +1,28 @@
 # flatarea
-쇼핑몰 프로젝트
+쇼핑몰 프로젝트 (개인 미니 프로젝트)
 
-Use : Spring, Jpa, MariaDB
+### 🛠기술스택
+<img src="https://img.shields.io/badge/JAVA-007396?style=for-the-badge&logo=java&logoColor=white" width:240px><img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"><img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"><img src="https://img.shields.io/badge/thymeleaf-005F0F?style=for-the-badge&logo=thymeleaf&logoColor=white"><img src="https://img.shields.io/badge/css3-1572B6?style=for-the-badge&logo=css3&logoColor=white"><img src="https://img.shields.io/badge/oracle-F80000?style=for-the-badge&logo=oracle&logoColor=white"><img src="https://img.shields.io/badge/jquery-0769AD?style=for-the-badge&logo=jquery&logoColor=white">
 
-Goal : 셀러와 구매자 사이를 중개해 주는 커머스 서버를 구축한다.
+---
 
-## 회원
+## 프로젝트 개요
+- 셀러와 구매자 사이를 중개해 주는 커머스 서버 구축
 
 
-## 고객
-- [x] 회원가입
+### 기능
+- 회원가입 및 로그인
+- 제품 등록 및 조회
+- 제품 구매
+- 장바구니
+- 회원정보 수정
 
-## 셀러
-- [x] 회원가입
+### 관리자 기능
+- 카테고리 관리
+- 브랜드 관리
+- 제품 관리
+- 회원 관리
 
-## 주문 서버
 
-### 셀러
-- [x] 상품 등록, 수정
-- [x] 상품 삭제
-- [x] 카테고리 등록, 수정
-- [x] 카페고리 삭제
-- [x] 브랜드 등록, 수정
-- [x] 브랜드 삭제
-- [ ] 고객 주문 관리 
-- [ ] 재고, 결제현황
-
-### 구매자
-- [x] 상품 정보 & 상세 페이지
-- [x] 장바구니에 물건 추가
-- [x] 장바구니 확인
-- [x] 주문하기
-- [x] 주문내역 확인
-
+### 프로젝트 일정
 
