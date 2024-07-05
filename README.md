@@ -33,4 +33,4 @@
 
 ![1](https://github.com/dltldud2kr/flatarea/assets/105353307/43437da0-39d0-44e0-830b-e57e2c869a1f)
 
-[관리자 페이지 이미지](https://github.com/dltldud2kr/flatarea/wiki)
+### [관리자 페이지 이미지](https://github.com/dltldud2kr/flatarea/wiki)
